@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+
+    <declare-styleable name="MySideViewFromRight">
+
+        <attr name="getText" format="string" />
+        <attr name="isText" format="string" />
+    </declare-styleable>
+
+    <declare-styleable name="MySideViewFromDown">
+
+        <attr name="getTextDown" format="string" />
+
+    </declare-styleable>
+
+
+</resources>

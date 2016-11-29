@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#10FFFFFF"
+    tools:context="com.example.dllo.baidumusic.Activity.MainActivity">
+
+
+    <com.example.dllo.baidumusic.CustomizeView.MySideViewFromRight
+        android:id="@+id/rightview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:getText="fra1"
+        >
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@android:color/white"
+           >
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                >
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical">
+
+                        <FrameLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_weight="8">
+
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:orientation="vertical">
+
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="0dp"
+                                    android:layout_weight="2"
+                                    android:background="@mipmap/default_skin_orig"
+                                    android:orientation="vertical">
+
+                                    <LinearLayout
+                                        android:layout_width="match_parent"
+                                        android:layout_height="0dp"
+                                        android:layout_weight="0.4"
+
+
+                                        >
+
+                                    </LinearLayout>
+
+                                    <LinearLayout
+                                        android:layout_width="match_parent"
+                                        android:layout_height="0dp"
+                                        android:layout_weight="1"
+                                        android:orientation="horizontal"
+                                        >
+                                        <ImageView
+                                            android:layout_marginLeft="10dp"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:src="@mipmap/sapi_btn_back"
+                                            android:layout_gravity="center"
+                                            android:id="@+id/iv_btn_from_right_more_back"
+                                            />
+
+                                        <TextView
+                                            android:id="@+id/iv_main_call_side_fragment"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:layout_gravity="center"
+                                            android:gravity="left"
+                                            android:layout_marginLeft="13dp"
+                                            android:layout_weight="1"
+                                            android:textSize="20sp"
+                                            android:textColor="@android:color/white"
+                                            android:text="更多"
+                                             />
+                                    </LinearLayout>
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:id="@+id/vp_main"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="0dp"
+                                    android:layout_weight="13"
+                                    android:orientation="vertical"
+                                    >
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                </LinearLayout>
+
+
+                            </LinearLayout>
+
+
+                        </FrameLayout>
+
+                    </LinearLayout>
+
+
+
+
+
+                </RelativeLayout>
+            </FrameLayout>
+
+        </RelativeLayout>
+
+    </com.example.dllo.baidumusic.CustomizeView.MySideViewFromRight>
+</RelativeLayout>
