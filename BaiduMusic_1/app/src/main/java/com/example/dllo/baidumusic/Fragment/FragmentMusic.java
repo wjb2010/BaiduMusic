@@ -6,6 +6,7 @@ import android.support.v4.view.ViewPager;
 import android.view.View;
 
 import com.example.dllo.baidumusic.Adapter.MusicViewPagerAdapter;
+import com.example.dllo.baidumusic.Fragment.MusicFragment.MusicListFragment;
 import com.example.dllo.baidumusic.Fragment.MusicFragment.RecommendFragment;
 import com.example.dllo.baidumusic.R;
 
@@ -40,7 +41,7 @@ public class FragmentMusic extends BaseFragment {
 
         data=new ArrayList<>();
         data.add(new RecommendFragment());
-        data.add(new FragmentTest());
+        data.add(new MusicListFragment());
         data.add(new FragmentTest());
         data.add(new FragmentTest());
         data.add(new FragmentTest());
