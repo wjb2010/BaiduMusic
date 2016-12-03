@@ -22,6 +22,8 @@ import com.example.dllo.baidumusic.Bean.RecommendBean;
 import com.example.dllo.baidumusic.Direction.DividerItemDecoration;
 import com.example.dllo.baidumusic.Fragment.BaseFragment;
 import com.example.dllo.baidumusic.R;
+import com.example.dllo.baidumusic.VolleyPackage.NetHelper;
+import com.example.dllo.baidumusic.VolleyPackage.NetListener;
 import com.google.gson.Gson;
 
 /**
@@ -34,7 +36,7 @@ public class MusicListFragment extends BaseFragment {
     private String url_right = "http://tingapi.ting.baidu.com/v1/restserver/ting?from=android&version=5.9.0.0&channel=musicsybutton&operator=3&method=baidu.ting.ugcdiy.getChanneldiy&param=KCMEbowGs9x5xx60uhnTbuKh%2FJSHQO2cZoBMGjXmxtEbf5ooybFfTK2bHQYo71cyyqSqUD0iAoWKCW3Gc%2Fr4XKph39rVWd3u%2Fda4qBk0Xm2oORqSMzw6lIksZDl1HzjHEytMMDFZkQX4S0qjspGiFQ%3D%3D&timestamp=1480419423&sign=801e1d7e85140751da7b883375e81815";
     private RecyclerView rv;
 
-    private TextView tv_left,tv_right;
+    private TextView tv_left, tv_right;
 
     @Override
     public int setLayout() {
@@ -51,71 +53,60 @@ public class MusicListFragment extends BaseFragment {
 
     @Override
     public void initData() {
-        tv_left.setTextColor(Color.argb(255,36,54,255));
+        tv_left.setTextColor(Color.argb(255, 36, 54, 255));
 
-        RequestQueue requestQueue = Volley.newRequestQueue(getContext());
-        StringRequest stringRequest = new StringRequest(url_left, new Response.Listener<String>() {
+        /**
+         * Volley封装
+         */
+        NetHelper.MyRequest(url_left, MusicListBean.class, new NetListener<MusicListBean>() {
             @Override
-            public void onResponse(String response) {
-
-                MusicListBean data = new MusicListBean();
-
-                Gson gson = new Gson();
-                data = gson.fromJson(response, MusicListBean.class);
-
+            public void successListener(MusicListBean response) {
 
                 MusicListAdapter out = new MusicListAdapter(getContext());
                 // rv.addItemDecoration(new DividerItemDecoration(getContext(), LinearLayout.VERTICAL));
-                out.setData(data);
+                out.setData(response);
                 rv.setAdapter(out);
 
                 rv.setLayoutManager(new GridLayoutManager(getContext(), 2));
-
-
             }
-        }, new Response.ErrorListener() {
+
             @Override
-            public void onErrorResponse(VolleyError error) {
+            public void errorListener(VolleyError error) {
 
             }
         });
-        requestQueue.add(stringRequest);
-
 
 
         tv_left.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                tv_left.setTextColor(Color.argb(255,36,54,255));
-                tv_right.setTextColor(Color.argb(255,00,00,00));
-                RequestQueue requestQueue = Volley.newRequestQueue(getContext());
-                StringRequest stringRequest = new StringRequest(url_left, new Response.Listener<String>() {
+                tv_left.setTextColor(Color.argb(255, 36, 54, 255));
+                tv_right.setTextColor(Color.argb(255, 00, 00, 00));
+
+                /**
+                 * Volley封装
+                 */
+
+                NetHelper.MyRequest(url_left, MusicListBean.class, new NetListener<MusicListBean>() {
                     @Override
-                    public void onResponse(String response) {
-
-                        MusicListBean data = new MusicListBean();
-
-                        Gson gson = new Gson();
-                        data = gson.fromJson(response, MusicListBean.class);
+                    public void successListener(MusicListBean response) {
 
 
                         MusicListAdapter out = new MusicListAdapter(getContext());
                         // rv.addItemDecoration(new DividerItemDecoration(getContext(), LinearLayout.VERTICAL));
-                        out.setData(data);
+                        out.setData(response);
                         rv.setAdapter(out);
 
                         rv.setLayoutManager(new GridLayoutManager(getContext(), 2));
-
-
                     }
-                }, new Response.ErrorListener() {
+
                     @Override
-                    public void onErrorResponse(VolleyError error) {
+                    public void errorListener(VolleyError error) {
 
                     }
                 });
-                requestQueue.add(stringRequest);
+
 
             }
         });
@@ -124,40 +115,33 @@ public class MusicListFragment extends BaseFragment {
             @Override
             public void onClick(View v) {
 
-                tv_right.setTextColor(Color.argb(255,36,54,255));
-                tv_left.setTextColor(Color.argb(255,00,00,00));
-
-                RequestQueue requestQueue = Volley.newRequestQueue(getContext());
-                StringRequest stringRequest = new StringRequest(url_right, new Response.Listener<String>() {
+                tv_right.setTextColor(Color.argb(255, 36, 54, 255));
+                tv_left.setTextColor(Color.argb(255, 00, 00, 00));
+                /**
+                 * Volley封装
+                 */
+                NetHelper.MyRequest(url_right, MusicListNewBean.class, new NetListener<MusicListNewBean>() {
                     @Override
-                    public void onResponse(String response) {
-
-                        MusicListNewBean data = new MusicListNewBean();
-
-                        Gson gson = new Gson();
-                        data = gson.fromJson(response, MusicListNewBean.class);
+                    public void successListener(MusicListNewBean response) {
 
 
                         MusicListRightAdapter out = new MusicListRightAdapter(getContext());
                         // rv.addItemDecoration(new DividerItemDecoration(getContext(), LinearLayout.VERTICAL));
-                        out.setData(data);
+                        out.setData(response);
                         rv.setAdapter(out);
 
                         rv.setLayoutManager(new GridLayoutManager(getContext(), 2));
-
-
                     }
-                }, new Response.ErrorListener() {
+
                     @Override
-                    public void onErrorResponse(VolleyError error) {
+                    public void errorListener(VolleyError error) {
 
                     }
                 });
-                requestQueue.add(stringRequest);
+
+
             }
         });
-
-
 
 
     }

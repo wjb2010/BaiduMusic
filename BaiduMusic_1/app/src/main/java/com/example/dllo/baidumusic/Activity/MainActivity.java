@@ -1,5 +1,8 @@
 package com.example.dllo.baidumusic.Activity;
 
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.app.Service;
 import android.content.BroadcastReceiver;
 import android.content.ComponentName;
@@ -16,12 +19,15 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.app.NotificationCompat;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
+import android.widget.RemoteViews;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -29,6 +35,7 @@ import com.example.dllo.baidumusic.Adapter.MainViewPagerAdapter;
 import com.example.dllo.baidumusic.Bean.LocalMusicBean;
 import com.example.dllo.baidumusic.Fragment.FragmentDynamic;
 import com.example.dllo.baidumusic.Fragment.FragmentMine;
+import com.example.dllo.baidumusic.Fragment.FragmentTest;
 import com.example.dllo.baidumusic.Fragment.SideFragment.FragmentMore;
 import com.example.dllo.baidumusic.Fragment.FragmentMusic;
 import com.example.dllo.baidumusic.Fragment.SideFragment.FragmentMusicFromDown;
@@ -59,8 +66,8 @@ public class MainActivity extends BaseActivity {
     private TextView tv_music_name_marquee;
     private TextView tv_music_author;
     private Thread t_progressBar;
-    private boolean pause=false;
-    private boolean check=true;
+    private boolean pause = false;
+    private boolean check = true;
     private boolean pause_or_play;
 
     private ImageView iv_btn_music_list_from_rightdown;
@@ -76,32 +83,31 @@ public class MainActivity extends BaseActivity {
         return R.layout.activity_main;
     }
 
+
     @Override
     public void initView() {
 
-        tab=bindView(R.id.tab_main);
-        vp=bindView(R.id.vp_main);
-        rl_down_music=bindView(R.id.rl_down_music);
-        iv_main_call_side_fragment=bindView(R.id.iv_main_call_side_fragment);
-        tv_marquee=bindView(R.id.tv_music_name_marquee);
-        pb_music_down=bindView(R.id.pb_music_down);
-        btn_music_control_play_pause=bindView(R.id.btn_music_control_play_pause);
-        btn_music_control_next=bindView(R.id.btn_music_control_next);
-        tv_music_name_marquee=bindView(R.id.tv_music_name_marquee);
-        tv_music_author=bindView(R.id.tv_music_author);
-        iv_btn_music_list_from_rightdown=bindView(R.id.iv_btn_music_list_from_rightdown);
-
-
+        tab = bindView(R.id.tab_main);
+        vp = bindView(R.id.vp_main);
+        rl_down_music = bindView(R.id.rl_down_music);
+        iv_main_call_side_fragment = bindView(R.id.iv_main_call_side_fragment);
+        tv_marquee = bindView(R.id.tv_music_name_marquee);
+        pb_music_down = bindView(R.id.pb_music_down);
+        btn_music_control_play_pause = bindView(R.id.btn_music_control_play_pause);
+        btn_music_control_next = bindView(R.id.btn_music_control_next);
+        tv_music_name_marquee = bindView(R.id.tv_music_name_marquee);
+        tv_music_author = bindView(R.id.tv_music_author);
+        iv_btn_music_list_from_rightdown = bindView(R.id.iv_btn_music_list_from_rightdown);
 
         /**
          * 建立服务Intent
          * 建立服务连接
          */
-        connectMusicControlIntent=new Intent(this,MusicControlService.class);
-        musicSerCon=new ServiceConnection() {
+        connectMusicControlIntent = new Intent(this, MusicControlService.class);
+        musicSerCon = new ServiceConnection() {
             @Override
             public void onServiceConnected(ComponentName name, IBinder service) {
-                musicCtrlBinder= (MusicControlService.MyBinder) service;
+                musicCtrlBinder = (MusicControlService.MyBinder) service;
 
                 /**
                  * 初次设定最大时长
@@ -119,7 +125,7 @@ public class MainActivity extends BaseActivity {
             }
         };
 
-        bindService(connectMusicControlIntent,musicSerCon,BIND_AUTO_CREATE);
+        bindService(connectMusicControlIntent, musicSerCon, BIND_AUTO_CREATE);
 
         initMusicControlBR();
         initDestroyFragmentBR();
@@ -137,27 +143,27 @@ public class MainActivity extends BaseActivity {
     }
 
     private void initDestroyFragmentBR() {
-        myBR=new MyDestroySideFragmentBR();
-        IntentFilter intentFilter=new IntentFilter();
+        myBR = new MyDestroySideFragmentBR();
+        IntentFilter intentFilter = new IntentFilter();
         intentFilter.addAction("MyDestroySideFragmentBR");
-        registerReceiver(myBR,intentFilter);
+        registerReceiver(myBR, intentFilter);
     }
 
     @Override
     protected void initData() {
 
-
-
-        data=new ArrayList<>();
+        showNotification();
+        data = new ArrayList<>();
         data.add(new FragmentMine());
-        data.add(new FragmentMusic());
-        data.add(new FragmentDynamic());
+        data.add(new FragmentMusic(this));
+        // data.add(new FragmentDynamic());
+        data.add(new FragmentTest());
         data.add(new FragmentMine());
 
-        MainViewPagerAdapter mainViewPagerAdapter=new MainViewPagerAdapter(getSupportFragmentManager());
+        MainViewPagerAdapter mainViewPagerAdapter = new MainViewPagerAdapter(getSupportFragmentManager());
         mainViewPagerAdapter.setData(data);
-        tab.setTabTextColors(Color.argb(220,162,217,239),Color.WHITE);
-        tab.setSelectedTabIndicatorColor(Color.argb(00,00,00,00));
+        tab.setTabTextColors(Color.argb(220, 162, 217, 239), Color.WHITE);
+        tab.setSelectedTabIndicatorColor(Color.argb(00, 00, 00, 00));
         vp.setAdapter(mainViewPagerAdapter);
         tab.setupWithViewPager(vp);
         tv_marquee.setFocusable(true);
@@ -171,14 +177,14 @@ public class MainActivity extends BaseActivity {
             public void onClick(View v) {
                 FragmentManager fragmentManager = getSupportFragmentManager();
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                if (fragmentManager.findFragmentByTag("fra_from_down") == null) {
-                    fragmentTransaction.setCustomAnimations(R.anim.myanim_from_down_one, R.anim.myanim_from_down_two);
+//                if (fragmentManager.findFragmentByTag("fra_from_down") == null) {
+                fragmentTransaction.setCustomAnimations(R.anim.myanim_from_down_one, R.anim.myanim_from_down_two, R.anim.myanim_from_down_one, R.anim.myanim_from_down_two);
 
-                    fragmentTransaction.replace(R.id.fra_all_from_down, new FragmentMusicFromDown(), "fra_from_down");
+                fragmentTransaction.replace(R.id.fra_all_from_down, new FragmentMusicFromDown(), "fra_from_down");
+                fragmentTransaction.addToBackStack("fra_from_down");
+                fragmentTransaction.commit();
 
-                    fragmentTransaction.commit();
-
-                }
+//                }
 
             }
         });
@@ -191,17 +197,18 @@ public class MainActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
 
-                FragmentManager fragmentManager=getSupportFragmentManager();
-                FragmentTransaction fragmentTransaction=fragmentManager.beginTransaction();
-                if (fragmentManager.findFragmentByTag("fra1")==null) {
-                    fragmentTransaction.setCustomAnimations(R.anim.myanim, R.anim.myanim2);
+                FragmentManager fragmentManager = getSupportFragmentManager();
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+//                if (fragmentManager.findFragmentByTag("fra1")==null) {
+                fragmentTransaction.setCustomAnimations(R.anim.myanim, R.anim.myanim2);
 
-                    fragmentTransaction.add(R.id.fra, new FragmentMore(), "fra1");
+                fragmentTransaction.add(R.id.fra, new FragmentMore(), "fra1");
+                fragmentTransaction.addToBackStack("fra1");
 
-                    fragmentTransaction.commit();
+                fragmentTransaction.commit();
 
-                }
             }
+//            }
         });
 
 
@@ -212,20 +219,22 @@ public class MainActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
 
-                FragmentManager fragmentManager=getSupportFragmentManager();
-                FragmentTransaction fragmentTransaction=fragmentManager.beginTransaction();
-                if (fragmentManager.findFragmentByTag("fra_music_list_from_rightdown")==null) {
+                FragmentManager fragmentManager = getSupportFragmentManager();
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                if (fragmentManager.findFragmentByTag("fra_music_list_from_rightdown") == null) {
+
                     fragmentTransaction.setCustomAnimations(R.anim.myanim_from_down_one, R.anim.myanim_from_down_two);
 
                     fragmentTransaction.add(R.id.fra, new FragmentMusicListFromRightDown(), "fra_music_list_from_rightdown");
 
+                    fragmentTransaction.addToBackStack("fra_music_list_from_rightdown");
                     fragmentTransaction.commit();
 
-                }else {
+                } else {
                     fragmentTransaction.setCustomAnimations(R.anim.myanim_from_down_one, R.anim.myanim_from_down_two);
                     fragmentTransaction.remove(fragmentManager.findFragmentByTag("fra_music_list_from_rightdown"));
+                    fragmentManager.popBackStack();
                     fragmentTransaction.commit();
-
                     Toast.makeText(MainActivity.this, "已经存在", Toast.LENGTH_SHORT).show();
                 }
 
@@ -240,12 +249,13 @@ public class MainActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
 
-                if (!flag_this_song&&!musicCtrlBinder.isPlaying()) {
+                if (!flag_this_song && !musicCtrlBinder.isPlaying()) {
 
-                    if ( musicCtrlBinder!= null) {
+                    if (musicCtrlBinder != null) {
+
                         musicCtrlBinder.playMusic();
                         musicCtrlBinder.playNextWhenComplete();
-                        flag_this_song=true;
+                        flag_this_song = true;
                         btn_music_control_play_pause.setImageResource(R.mipmap.bt_minibar_pause_normal);
 
                     }
@@ -260,7 +270,7 @@ public class MainActivity extends BaseActivity {
                                     if (musicCtrlBinder != null)
 
                                         pb_music_down.setProgress(musicCtrlBinder.progress());
-                                    pause=false;
+                                    pause = false;
                                 }
 
                             }
@@ -269,24 +279,19 @@ public class MainActivity extends BaseActivity {
                     }
 
 
-
-
-
-                }else {
+                } else {
 
                     if (musicCtrlBinder != null) {
 
                         pause_or_play = musicCtrlBinder.pause();
 
-                        if (!pause_or_play){
-
-
+                        if (!pause_or_play) {
 
 
                             btn_music_control_play_pause.setImageResource(R.mipmap.bt_minibar_play_normal);
 
 
-                        }else {
+                        } else {
 
                             btn_music_control_play_pause.setImageResource(R.mipmap.bt_minibar_pause_normal);
 
@@ -295,9 +300,6 @@ public class MainActivity extends BaseActivity {
                     }
 
                 }
-
-
-
 
 
                 Toast.makeText(MainActivity.this, "点击了播放", Toast.LENGTH_SHORT).show();
@@ -317,14 +319,14 @@ public class MainActivity extends BaseActivity {
                 /**
                  * 暂停时的下一曲
                  */
-                if(flag_this_song&&!musicCtrlBinder.isPlaying()){
+                if (flag_this_song && !musicCtrlBinder.isPlaying()) {
 
-                  //  flag_play = true;
+                    //  flag_play = true;
 
 
                     if (musicCtrlBinder != null) {
                         musicCtrlBinder.playNext();
-                        if (musicCtrlBinder.isPlaying()){
+                        if (musicCtrlBinder.isPlaying()) {
 
                             btn_music_control_play_pause.setImageResource(R.mipmap.bt_minibar_pause_normal);
 
@@ -340,8 +342,8 @@ public class MainActivity extends BaseActivity {
                 else {
                     if (musicCtrlBinder != null) {
                         musicCtrlBinder.playNext();
-                       // flag_this_song=true;
-                        if (musicCtrlBinder.isPlaying()){
+                        // flag_this_song=true;
+                        if (musicCtrlBinder.isPlaying()) {
 
                             btn_music_control_play_pause.setImageResource(R.mipmap.bt_minibar_pause_normal);
 
@@ -350,15 +352,69 @@ public class MainActivity extends BaseActivity {
                     }
 
 
-
                 }
-
 
 
             }
         });
 
 
+    }
+
+    private void showNotification() {
+
+        NotificationManager m = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+        //自定义的Notification,我们使用remoteView来加载布局
+        //第一个参数:包名
+        //第二个参数:布局文件
+        RemoteViews remoteViews = new RemoteViews(getPackageName(), R.layout.layout_notification);
+
+        //使用remoteView加载内容
+        //第一个参数就是我们组件的ID
+        //第二个参数就是具体的内容
+
+
+        //remoteViews.setImageViewResource(R.mipmap.ic_launcher,R.mipmap.lol);
+
+        //我们用广播来执行这个意图
+//        Intent intent1 = new Intent(getPackageName() + ".MY_MUSIC_BR");
+//        intent1.putExtra("key", 1);
+//        Intent intent2 = new Intent(getPackageName() + ".MY_MUSIC_BR");
+//        intent2.putExtra("key", 2);
+//        Intent intent3 = new Intent(getPackageName() + ".MY_MUSIC_BR");
+//        intent3.putExtra("key", 3);
+//        PendingIntent pI1 = PendingIntent.getBroadcast(this, 100, intent1, PendingIntent.FLAG_CANCEL_CURRENT);
+//        PendingIntent pI2 = PendingIntent.getBroadcast(this, 200, intent2, PendingIntent.FLAG_CANCEL_CURRENT);
+//        PendingIntent pI3 = PendingIntent.getBroadcast(this, 300, intent3, PendingIntent.FLAG_CANCEL_CURRENT);
+//        //为remoteView添加监听事件
+//        remoteViews.setOnClickPendingIntent(R.id.btn_music, pI1);
+//        remoteViews.setOnClickPendingIntent(R.id.btn_next, pI2);
+//        remoteViews.setOnClickPendingIntent(R.id.btn_pre, pI3);
+
+
+        //Notification.Builder builder = new Notification.Builder(this);
+
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(this);
+
+        //一定要加小图标
+        builder.setSmallIcon(R.mipmap.ic_launcher);
+
+        //builser.setCustomContentView(remoteViews);
+        //builder.setContent(remoteViews);
+
+        Notification notification = builder.build();
+
+
+        if(android.os.Build.VERSION.SDK_INT >= 16) {
+            notification = builder.build();
+            notification.bigContentView = remoteViews;
+        }
+
+        notification.contentView = remoteViews;
+        notification.flags=Notification.FLAG_NO_CLEAR;
+        //notification.flags = Notification.FLAG_AUTO_CANCEL;
+
+        m.notify(1, notification);
 
 
     }
@@ -372,8 +428,8 @@ public class MainActivity extends BaseActivity {
 
             //  Toast.makeText(context, intent.getStringExtra("key"), Toast.LENGTH_SHORT).show();
 
-            FragmentManager fragmentManager=getSupportFragmentManager();
-            FragmentTransaction fragmentTransaction=fragmentManager.beginTransaction();
+            FragmentManager fragmentManager = getSupportFragmentManager();
+            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
             fragmentTransaction.remove(fragmentManager.findFragmentByTag(intent.getStringExtra("key")));
             fragmentTransaction.commit();
 
@@ -384,28 +440,42 @@ public class MainActivity extends BaseActivity {
 
         @Override
         public void onReceive(Context context, Intent intent) {
+            String net_url = intent.getStringExtra("play_net_music");
 
 
             if (musicCtrlBinder != null) {
+                /**
+                 * 网络歌曲
+                 */
 
+                musicCtrlBinder.playNetMusic(net_url);
+
+                /**
+                 * 本地歌曲
+                 */
+                //musicCtrlBinder.playMusic();
+
+                /**
+                 * 赋值等操作
+                 */
                 //取值
-                LocalMusicBean bean = intent.getParcelableExtra("key");
-                tv_music_name_marquee.setText(bean.getTitle());
-                tv_music_author.setText(bean.getSinger());
+//                LocalMusicBean bean = intent.getParcelableExtra("key");
+//                tv_music_name_marquee.setText(bean.getTitle());
+//                tv_music_author.setText(bean.getSinger());
                 //设置新歌曲的时长
-                pb_music_down.setMax(musicCtrlBinder.Max());
-            }
-
-
+//                pb_music_down.setMax(musicCtrlBinder.Max());
             }
 
 
         }
 
+
+    }
+
     @Override
     protected void onDestroy() {
 
-        if (musicSerCon!=null) {
+        if (musicSerCon != null) {
             unbindService(musicSerCon);
         }
 

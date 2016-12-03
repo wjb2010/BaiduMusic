@@ -14,6 +14,8 @@ import com.example.dllo.baidumusic.Adapter.DynamicOutRecyclerViewAdapter;
 import com.example.dllo.baidumusic.Bean.DynamicBean;
 import com.example.dllo.baidumusic.Direction.DividerItemDecoration;
 import com.example.dllo.baidumusic.R;
+import com.example.dllo.baidumusic.VolleyPackage.NetHelper;
+import com.example.dllo.baidumusic.VolleyPackage.NetListener;
 import com.google.gson.Gson;
 
 /**
@@ -38,37 +40,35 @@ public class FragmentDynamic extends BaseFragment {
 
     @Override
     public void initData() {
-
-
-        RequestQueue requestQueue= Volley.newRequestQueue(getContext());
-        StringRequest stringRequest=new StringRequest(url, new Response.Listener<String>() {
+        /**
+         * Volley封装
+         */
+        NetHelper.MyRequest(url, DynamicBean.class, new NetListener<DynamicBean>() {
             @Override
-            public void onResponse(String response) {
-                DynamicBean data=new DynamicBean();
-                Gson gson=new Gson();
-                data=gson.fromJson(response,DynamicBean.class);
+            public void successListener(DynamicBean response) {
+
+
 
 
                 DynamicOutRecyclerViewAdapter dynamicOutRecyclerViewAdapter=new DynamicOutRecyclerViewAdapter(getContext());
 
 
-                dynamicOutRecyclerViewAdapter.setData(data);
+                dynamicOutRecyclerViewAdapter.setData(response);
                 rv.addItemDecoration(new DividerItemDecoration(getContext(), LinearLayout.VERTICAL));
                 rv.setAdapter(dynamicOutRecyclerViewAdapter);
 
                 rv.setLayoutManager(new LinearLayoutManager(getContext()));
 
-
-
             }
-        }, new Response.ErrorListener() {
+
             @Override
-            public void onErrorResponse(VolleyError error) {
+            public void errorListener(VolleyError error) {
 
             }
         });
 
-        requestQueue.add(stringRequest);
+
+
 
 
 

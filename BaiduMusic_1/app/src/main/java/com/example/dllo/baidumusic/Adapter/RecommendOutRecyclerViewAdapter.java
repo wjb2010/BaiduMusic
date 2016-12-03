@@ -1,6 +1,10 @@
 package com.example.dllo.baidumusic.Adapter;
 
 import android.content.Context;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -25,8 +29,16 @@ import com.example.dllo.baidumusic.Adapter.RecommendAdpater.OriMusicAdapter;
 import com.example.dllo.baidumusic.Banner.GlideImageloader;
 import com.example.dllo.baidumusic.Bean.RanPicBean;
 import com.example.dllo.baidumusic.Bean.RecommendBean;
+import com.example.dllo.baidumusic.Bean.RecommendMusicListBean;
 import com.example.dllo.baidumusic.Direction.DividerItemDecoration;
+import com.example.dllo.baidumusic.Fragment.MusicFragment.Recommend_One.GeShouFragment;
+import com.example.dllo.baidumusic.Fragment.SideFragment.FragmentMore;
+import com.example.dllo.baidumusic.Fragment.SideFragment.FragmentRecommendMusicList;
+import com.example.dllo.baidumusic.Fragment.SideFragment.FragmentTopTen;
+import com.example.dllo.baidumusic.Interface.MyClick;
 import com.example.dllo.baidumusic.R;
+import com.example.dllo.baidumusic.VolleyPackage.NetHelper;
+import com.example.dllo.baidumusic.VolleyPackage.NetListener;
 import com.google.gson.Gson;
 import com.squareup.picasso.Picasso;
 import com.youth.banner.Banner;
@@ -43,16 +55,24 @@ import java.util.Arrays;
 public class RecommendOutRecyclerViewAdapter extends RecyclerView.Adapter {
 
     private Context context;
+    /**
+     * 此data包含第二个RV的listID
+     */
     private RecommendBean data;
-    public static final String url_ran="http://tingapi.ting.baidu.com/v1/restserver/ting?method=baidu.ting.plaza.getFocusPic&format=json&from=ios&version=5.2.3&from=ios&channel=appstore";
+    public static final String url_ran = "http://tingapi.ting.baidu.com/v1/restserver/ting?method=baidu.ting.plaza.getFocusPic&format=json&from=ios&version=5.2.3&from=ios&channel=appstore";
+    private AppCompatActivity appCompatActivity;
+    public static final String PARTA="http://tingapi.ting.baidu.com/v1/restserver/ting?method=baidu.ting.diy.gedanInfo&from=ios&listid=";
+    public static final String PARTC="&version=5.2.3&from=ios&channel=appstore";
 
     public void setData(RecommendBean data) {
         this.data = data;
         notifyDataSetChanged();
     }
 
-    public RecommendOutRecyclerViewAdapter(Context context) {
+
+    public RecommendOutRecyclerViewAdapter(Context context, AppCompatActivity appCompatActivity) {
         this.context = context;
+        this.appCompatActivity = appCompatActivity;
     }
 
     @Override
@@ -63,67 +83,62 @@ public class RecommendOutRecyclerViewAdapter extends RecyclerView.Adapter {
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
-        RecyclerView.ViewHolder viewHolder=null;
+        RecyclerView.ViewHolder viewHolder = null;
 
 
-        switch (viewType){
+        switch (viewType) {
 
             case 0:
-                View view0= LayoutInflater.from(context).inflate(R.layout.item_recommend_head,parent,false);
+                View view0 = LayoutInflater.from(context).inflate(R.layout.item_recommend_head, parent, false);
 
-                viewHolder=new BlankViewHolder(view0);
+                viewHolder = new BlankViewHolder(view0);
                 break;
 
             case 1:
-                View view1= LayoutInflater.from(context).inflate(R.layout.item_recommend_gedantuijian,parent,false);
+                View view1 = LayoutInflater.from(context).inflate(R.layout.item_recommend_gedantuijian, parent, false);
 
-                viewHolder=new MusicRecommendViewHolder(view1);
+                viewHolder = new MusicRecommendViewHolder(view1);
                 break;
 
             case 2:
-                View view2=LayoutInflater.from(context).inflate(R.layout.item_recommend_xindieshangjia,parent,false);
+                View view2 = LayoutInflater.from(context).inflate(R.layout.item_recommend_xindieshangjia, parent, false);
 
-                viewHolder=new NewMusicViewHolder(view2);
+                viewHolder = new NewMusicViewHolder(view2);
                 break;
             case 3:
-                View view3=LayoutInflater.from(context).inflate(R.layout.item_recommend_rexiaozhuanji,parent,false);
+                View view3 = LayoutInflater.from(context).inflate(R.layout.item_recommend_rexiaozhuanji, parent, false);
 
-                viewHolder=new HotSellViewHolder(view3);
+                viewHolder = new HotSellViewHolder(view3);
                 break;
             case 4:
-                View view4=LayoutInflater.from(context).inflate(R.layout.item_recommend_ad,parent,false);
+                View view4 = LayoutInflater.from(context).inflate(R.layout.item_recommend_ad, parent, false);
 
-                viewHolder=new ADViewHolder(view4);
+                viewHolder = new ADViewHolder(view4);
                 break;
             case 5:
-                View view5=LayoutInflater.from(context).inflate(R.layout.item_recommend_yuanchuangyinyue,parent,false);
+                View view5 = LayoutInflater.from(context).inflate(R.layout.item_recommend_yuanchuangyinyue, parent, false);
 
-                viewHolder=new OriMusicViewHolder(view5);
+                viewHolder = new OriMusicViewHolder(view5);
                 break;
             case 6:
-                View view6=LayoutInflater.from(context).inflate(R.layout.item_recommend_zuiremvtuijian,parent,false);
+                View view6 = LayoutInflater.from(context).inflate(R.layout.item_recommend_zuiremvtuijian, parent, false);
 
-                viewHolder=new HotMVViewHolder(view6);
+                viewHolder = new HotMVViewHolder(view6);
                 break;
 
             case 7:
-                View view7=LayoutInflater.from(context).inflate(R.layout.item_recommend_lebojiemu,parent,false);
+                View view7 = LayoutInflater.from(context).inflate(R.layout.item_recommend_lebojiemu, parent, false);
 
-                viewHolder=new LeBoViewHolder(view7);
+                viewHolder = new LeBoViewHolder(view7);
                 break;
 
             case 8:
-                View view8=LayoutInflater.from(context).inflate(R.layout.item_recommend_zhuanlan,parent,false);
+                View view8 = LayoutInflater.from(context).inflate(R.layout.item_recommend_zhuanlan, parent, false);
 
-                viewHolder=new ColumnViewHolder(view8);
+                viewHolder = new ColumnViewHolder(view8);
                 break;
 
         }
-
-
-
-
-
 
 
         return viewHolder;
@@ -133,142 +148,207 @@ public class RecommendOutRecyclerViewAdapter extends RecyclerView.Adapter {
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
 
 
-        switch (getItemViewType(position)){
+        switch (getItemViewType(position)) {
 
             case 0:
-                final BlankViewHolder blankViewHolder= (BlankViewHolder) holder;
-                RequestQueue requestQueue= Volley.newRequestQueue(context);
-                StringRequest stringRequest=new StringRequest(url_ran, new Response.Listener<String>() {
+
+
+                final BlankViewHolder blankViewHolder = (BlankViewHolder) holder;
+
+                /**
+                 * 点击歌手弹出右侧fragment
+                 */
+                blankViewHolder.iv_geshou.setOnClickListener(new View.OnClickListener() {
                     @Override
-                    public void onResponse(String response) {
+                    public void onClick(View v) {
 
-                        RanPicBean data_ran=new RanPicBean();
-                        ArrayList<String> pics = new ArrayList<>();
-                        Gson gson=new Gson();
-                        data_ran=gson.fromJson(response, RanPicBean.class);
+                        FragmentManager fragmentManager = appCompatActivity.getSupportFragmentManager();
+                        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
 
-                        for (int i = 0; i < data_ran.getPic().size(); i++) {
+                        fragmentTransaction.setCustomAnimations(R.anim.myanim, R.anim.myanim2);
 
+                        fragmentTransaction.add(R.id.fra, new GeShouFragment(appCompatActivity), "fra_geshou");
+                        fragmentTransaction.addToBackStack("fra_geshou");
 
-                            pics.add(data_ran.getPic().get(i).getRandpic());
-                        }
+                        fragmentTransaction.commit();
 
-                        initRanPics(pics,blankViewHolder.banner);
-
-
-
-
-
-                    }
-                }, new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
 
                     }
                 });
 
-                requestQueue.add(stringRequest);
+                /**
+                 * Volley封装
+                 */
+
+                NetHelper.MyRequest(url_ran, RanPicBean.class, new NetListener<RanPicBean>() {
+                    @Override
+                    public void successListener(RanPicBean response) {
+
+                        ArrayList<String> pics = new ArrayList<>();
+
+
+                        for (int i = 0; i < response.getPic().size(); i++) {
+
+
+                            pics.add(response.getPic().get(i).getRandpic());
+                        }
+
+                        initRanPics(pics, blankViewHolder.banner);
+
+                    }
+
+                    @Override
+                    public void errorListener(VolleyError error) {
+
+                    }
+                });
+
+
+                /**
+                 *
+                 */
 
 
                 break;
 
 
-
             case 1:
-                MusicRecommendViewHolder musicRecommendViewHolder= (MusicRecommendViewHolder) holder;
+                MusicRecommendViewHolder musicRecommendViewHolder = (MusicRecommendViewHolder) holder;
                 Picasso.with(context).load(data.getModule().get(3).getPicurl()).into(musicRecommendViewHolder.iv);
 
 
-                MusicRecommendAdapter doubleItemAdapter=new MusicRecommendAdapter(context);
+                /**
+                 *
+                 * 响应点击事件,准备拼接ID
+                 *
+                 */
+
+                MusicRecommendAdapter doubleItemAdapter = new MusicRecommendAdapter(context);
+                doubleItemAdapter.setMyClick(new MyClick() {
+                    @Override
+                    public void MyClick(int position) {
+
+                    }
+
+                    @Override
+                    public void MyClickUrl(String url, int position) {
+
+                        /**
+                         * 加入listID拼接
+                         */
+                        String final_url=PARTA+url+PARTC;
+                        NetHelper.MyRequest(final_url, RecommendMusicListBean.class, new NetListener<RecommendMusicListBean>() {
+                            @Override
+                            public void successListener(RecommendMusicListBean response) {
+
+
+                                FragmentManager fragmentManager=appCompatActivity.getSupportFragmentManager();
+                                FragmentTransaction fragmentTransaction=fragmentManager.beginTransaction();
+                                fragmentTransaction.setCustomAnimations(R.anim.myanim, R.anim.myanim2);
+                                fragmentTransaction.add(R.id.fra, new FragmentRecommendMusicList(appCompatActivity,response), "fra_recommend_musiclist");
+                                fragmentTransaction.addToBackStack("fra_recommend_musiclist");
+                                fragmentTransaction.commit();
+
+
+
+                            }
+
+                            @Override
+                            public void errorListener(VolleyError error) {
+
+                            }
+                        });
+
+
+
+
+
+
+                    }
+                });
                 doubleItemAdapter.setData(data.getResult().getDiy());
                 musicRecommendViewHolder.rv.setAdapter(doubleItemAdapter);
-                musicRecommendViewHolder.rv.setLayoutManager(new GridLayoutManager(context,3));
+                musicRecommendViewHolder.rv.setLayoutManager(new GridLayoutManager(context, 3));
 
 
                 break;
 
             case 2:
-                NewMusicViewHolder newMusicViewHolder= (NewMusicViewHolder) holder;
+                NewMusicViewHolder newMusicViewHolder = (NewMusicViewHolder) holder;
                 Picasso.with(context).load(data.getModule().get(5).getPicurl()).into(newMusicViewHolder.iv);
 
-                NewDiskAdapter newDiskAdapter=new NewDiskAdapter(context);
+                NewDiskAdapter newDiskAdapter = new NewDiskAdapter(context);
                 newDiskAdapter.setData(data.getResult().getMix_1());
                 newMusicViewHolder.rv.setAdapter(newDiskAdapter);
-                newMusicViewHolder.rv.setLayoutManager(new GridLayoutManager(context,3));
+                newMusicViewHolder.rv.setLayoutManager(new GridLayoutManager(context, 3));
 
 
                 break;
 
             case 3:
-                HotSellViewHolder hotSellViewHolder= (HotSellViewHolder) holder;
+                HotSellViewHolder hotSellViewHolder = (HotSellViewHolder) holder;
                 Picasso.with(context).load(data.getModule().get(6).getPicurl()).into(hotSellViewHolder.iv);
 
-                HotSellAdapter hotSellAdapter=new HotSellAdapter(context);
+                HotSellAdapter hotSellAdapter = new HotSellAdapter(context);
                 hotSellAdapter.setData(data.getResult().getMix_22());
                 hotSellViewHolder.rv.setAdapter(hotSellAdapter);
-                hotSellViewHolder.rv.setLayoutManager(new GridLayoutManager(context,3));
+                hotSellViewHolder.rv.setLayoutManager(new GridLayoutManager(context, 3));
 
                 break;
 
             case 4:
-                ADViewHolder adViewHolder= (ADViewHolder) holder;
+                ADViewHolder adViewHolder = (ADViewHolder) holder;
                 Picasso.with(context).load(data.getResult().getAd_small().getResult().get(0).getPic()).into(adViewHolder.iv);
                 break;
 
 
             case 5:
-                OriMusicViewHolder oriMusicViewHolder= (OriMusicViewHolder) holder;
+                OriMusicViewHolder oriMusicViewHolder = (OriMusicViewHolder) holder;
                 Picasso.with(context).load(data.getModule().get(10).getPicurl()).into(oriMusicViewHolder.iv);
 
-                OriMusicAdapter oriMusicAdapter=new OriMusicAdapter(context);
+                OriMusicAdapter oriMusicAdapter = new OriMusicAdapter(context);
                 oriMusicAdapter.setData(data.getResult().getMix_9());
                 oriMusicViewHolder.rv.setAdapter(oriMusicAdapter);
-                oriMusicViewHolder.rv.setLayoutManager(new GridLayoutManager(context,3));
+                oriMusicViewHolder.rv.setLayoutManager(new GridLayoutManager(context, 3));
 
                 break;
 
 
             case 6:
-                HotMVViewHolder hotMVViewHolder= (HotMVViewHolder) holder;
+                HotMVViewHolder hotMVViewHolder = (HotMVViewHolder) holder;
                 Picasso.with(context).load(data.getModule().get(11).getPicurl()).into(hotMVViewHolder.iv);
 
 
-                HotMVAdapter hotMVAdapter=new HotMVAdapter(context);
+                HotMVAdapter hotMVAdapter = new HotMVAdapter(context);
                 hotMVAdapter.setData(data.getResult().getMix_5());
                 hotMVViewHolder.rv.setAdapter(hotMVAdapter);
-                hotMVViewHolder.rv.setLayoutManager(new GridLayoutManager(context,3));
-
+                hotMVViewHolder.rv.setLayoutManager(new GridLayoutManager(context, 3));
 
 
                 break;
 
 
             case 7:
-                LeBoViewHolder leBoViewHolder= (LeBoViewHolder) holder;
+                LeBoViewHolder leBoViewHolder = (LeBoViewHolder) holder;
                 Picasso.with(context).load(data.getModule().get(12).getPicurl()).into(leBoViewHolder.iv);
 
-                LeBoAdapter leBoAdapter=new LeBoAdapter(context);
+                LeBoAdapter leBoAdapter = new LeBoAdapter(context);
                 leBoAdapter.setData(data.getResult().getRadio());
                 leBoViewHolder.rv.setAdapter(leBoAdapter);
-                leBoViewHolder.rv.setLayoutManager(new GridLayoutManager(context,3));
-
+                leBoViewHolder.rv.setLayoutManager(new GridLayoutManager(context, 3));
 
 
                 break;
             case 8:
 
-                ColumnViewHolder columnViewHolder= (ColumnViewHolder) holder;
+                ColumnViewHolder columnViewHolder = (ColumnViewHolder) holder;
                 Picasso.with(context).load(data.getModule().get(13).getPicurl()).into(columnViewHolder.iv);
 
-                ColumnAdapter columnAdapter=new ColumnAdapter(context);
+                ColumnAdapter columnAdapter = new ColumnAdapter(context);
                 columnAdapter.setData(data.getResult().getMod_7());
                 columnViewHolder.rv.addItemDecoration(new DividerItemDecoration(context, LinearLayout.VERTICAL));
                 columnViewHolder.rv.setAdapter(columnAdapter);
                 columnViewHolder.rv.setLayoutManager(new LinearLayoutManager(context));
-
-
-
-
 
 
                 break;
@@ -276,18 +356,9 @@ public class RecommendOutRecyclerViewAdapter extends RecyclerView.Adapter {
         }
 
 
-
-
-
-
-
-
-
-
-
     }
 
-    private void initRanPics(ArrayList<String> data_pics,Banner banner) {
+    private void initRanPics(ArrayList<String> data_pics, Banner banner) {
 
         // 设置banner样式
         banner.setBannerStyle(BannerConfig.CIRCLE_INDICATOR_TITLE);
@@ -309,7 +380,6 @@ public class RecommendOutRecyclerViewAdapter extends RecyclerView.Adapter {
         banner.start();
 
 
-
     }
 
     @Override
@@ -318,24 +388,21 @@ public class RecommendOutRecyclerViewAdapter extends RecyclerView.Adapter {
     }
 
 
-
-
-
-
-
-    class BlankViewHolder extends RecyclerView.ViewHolder{
+    class BlankViewHolder extends RecyclerView.ViewHolder {
 
         private Banner banner;
+        private ImageView iv_geshou;
 
 
         public BlankViewHolder(View itemView) {
             super(itemView);
             banner = (Banner) itemView.findViewById(R.id.banner);
+            iv_geshou = (ImageView) itemView.findViewById(R.id.iv_geshou);
         }
     }
 
 
-    class MusicRecommendViewHolder extends RecyclerView.ViewHolder{
+    class MusicRecommendViewHolder extends RecyclerView.ViewHolder {
         private ImageView iv;
         private RecyclerView rv;
 
@@ -348,10 +415,11 @@ public class RecommendOutRecyclerViewAdapter extends RecyclerView.Adapter {
     }
 
 
-    class NewMusicViewHolder extends RecyclerView.ViewHolder{
+    class NewMusicViewHolder extends RecyclerView.ViewHolder {
 
         private ImageView iv;
         private RecyclerView rv;
+
         public NewMusicViewHolder(View itemView) {
             super(itemView);
             iv = (ImageView) itemView.findViewById(R.id.iv_recommend_xindieshangjia);
@@ -359,9 +427,10 @@ public class RecommendOutRecyclerViewAdapter extends RecyclerView.Adapter {
         }
     }
 
-    class HotSellViewHolder extends RecyclerView.ViewHolder{
+    class HotSellViewHolder extends RecyclerView.ViewHolder {
         private ImageView iv;
         private RecyclerView rv;
+
         public HotSellViewHolder(View itemView) {
             super(itemView);
             iv = (ImageView) itemView.findViewById(R.id.iv_recommend_rexiaozhuanji);
@@ -369,7 +438,7 @@ public class RecommendOutRecyclerViewAdapter extends RecyclerView.Adapter {
         }
     }
 
-    class ADViewHolder extends RecyclerView.ViewHolder{
+    class ADViewHolder extends RecyclerView.ViewHolder {
         private ImageView iv;
 
         public ADViewHolder(View itemView) {
@@ -379,9 +448,10 @@ public class RecommendOutRecyclerViewAdapter extends RecyclerView.Adapter {
         }
     }
 
-    class OriMusicViewHolder extends RecyclerView.ViewHolder{
+    class OriMusicViewHolder extends RecyclerView.ViewHolder {
         private ImageView iv;
         private RecyclerView rv;
+
         public OriMusicViewHolder(View itemView) {
             super(itemView);
             iv = (ImageView) itemView.findViewById(R.id.iv_recommend_yuanchuangyinyue);
@@ -390,18 +460,19 @@ public class RecommendOutRecyclerViewAdapter extends RecyclerView.Adapter {
     }
 
 
-    class HotMVViewHolder extends RecyclerView.ViewHolder{
+    class HotMVViewHolder extends RecyclerView.ViewHolder {
 
         private ImageView iv;
         private RecyclerView rv;
+
         public HotMVViewHolder(View itemView) {
             super(itemView);
             iv = (ImageView) itemView.findViewById(R.id.iv_recommend_zuiremvtuijian);
             rv = (RecyclerView) itemView.findViewById(R.id.rv_recommend_zuiremvtuijian);
-    }
+        }
     }
 
-    class LeBoViewHolder extends RecyclerView.ViewHolder{
+    class LeBoViewHolder extends RecyclerView.ViewHolder {
         private ImageView iv;
         private RecyclerView rv;
 
@@ -413,7 +484,7 @@ public class RecommendOutRecyclerViewAdapter extends RecyclerView.Adapter {
     }
 
 
-    class ColumnViewHolder extends RecyclerView.ViewHolder{
+    class ColumnViewHolder extends RecyclerView.ViewHolder {
         private ImageView iv;
         private RecyclerView rv;
 
@@ -423,9 +494,6 @@ public class RecommendOutRecyclerViewAdapter extends RecyclerView.Adapter {
             rv = (RecyclerView) itemView.findViewById(R.id.rv_recommend_zhuanlan);
         }
     }
-
-
-
 
 
 }

@@ -74,99 +74,116 @@ public class DynamicOutRecyclerViewAdapter extends RecyclerView.Adapter {
 
 
 
-            if (data.getMsg().get(viewType-1).getContent().getContent_type() == 0||data.getMsg().get(viewType-1).getContent().getContent_type() == 3) {
+            if (data.getMsg().get(viewType - 1).getContent()!=null) {
 
-                int pic_count;
-                if (data.getMsg().get(viewType-1).getPiclist()==null){
-                    pic_count=0;
-                }else {
-                    pic_count = data.getMsg().get(viewType-1).getPiclist().size();
+                if (data.getMsg().get(viewType - 1).getContent().getContent_type() == 0) {
+
+                    int pic_count;
+                    if (data.getMsg().get(viewType - 1).getPiclist() == null) {
+                        pic_count = 0;
+                    } else {
+                        pic_count = data.getMsg().get(viewType - 1).getPiclist().size();
+                    }
+
+                    switch (pic_count) {
+                        case 0:
+                            View viewx0 = LayoutInflater.from(context).inflate(R.layout.item_dynamic_main_single_zero, parent, false);
+                            viewHolder = new DynamicMainSingleZeroViewHolder(viewx0);
+                            break;
+                        case 1:
+                            View viewx1 = LayoutInflater.from(context).inflate(R.layout.item_dynamic_main_single_one, parent, false);
+                            viewHolder = new DynamicMainSingleOneViewHolder(viewx1);
+                            break;
+
+                        case 2:
+                            View viewx2 = LayoutInflater.from(context).inflate(R.layout.item_dynamic_main_single_two, parent, false);
+                            viewHolder = new DynamicMainSingleTwoViewHolder(viewx2);
+                            break;
+
+                        case 3:
+                            View viewx3 = LayoutInflater.from(context).inflate(R.layout.item_dynamic_main_single_three, parent, false);
+                            viewHolder = new DynamicMainSingleThreeViewHolder(viewx3);
+                            break;
+
+                        case 4:
+                            View viewx4 = LayoutInflater.from(context).inflate(R.layout.item_dynamic_main_single_four, parent, false);
+                            viewHolder = new DynamicMainSingleFourViewHolder(viewx4);
+                            break;
+
+                        case 5:
+                            View viewx5 = LayoutInflater.from(context).inflate(R.layout.item_dynamic_main_single_five, parent, false);
+                            viewHolder = new DynamicMainSingleFiveViewHolder(viewx5);
+                            break;
+                        case 6:
+                            View viewx6 = LayoutInflater.from(context).inflate(R.layout.item_dynamic_main_single_six, parent, false);
+                            viewHolder = new DynamicMainSingleSixViewHolder(viewx6);
+                            break;
+                        default:
+                            View viewx7 = LayoutInflater.from(context).inflate(R.layout.item_dynamic_main_single_zero, parent, false);
+                            viewHolder = new DynamicMainSingleZeroViewHolder(viewx7);
+
+                            break;
+
+                    }
+
+
+                } else if (data.getMsg().get(viewType - 1).getContent().getContent_type() == 1) {
+
+
+                    int pic_count;
+                    if (data.getMsg().get(viewType - 1).getPiclist() == null) {
+                        pic_count = 0;
+                    } else {
+                        pic_count = data.getMsg().get(viewType - 1).getPiclist().size();
+                    }
+
+                    switch (pic_count) {
+                        case 0:
+                            View viewx0 = LayoutInflater.from(context).inflate(R.layout.item_dynamic_main_list_zero, parent, false);
+                            viewHolder = new DynamicMainListZeroViewHolder(viewx0);
+                            break;
+                        case 1:
+                            View viewx1 = LayoutInflater.from(context).inflate(R.layout.item_dynamic_main_list_one, parent, false);
+                            viewHolder = new DynamicMainListOneViewHolder(viewx1);
+                            break;
+
+                        case 2:
+                            View viewx2 = LayoutInflater.from(context).inflate(R.layout.item_dynamic_main_list_two, parent, false);
+                            viewHolder = new DynamicMainListTwoViewHolder(viewx2);
+                            break;
+
+                        case 3:
+                            View viewx3 = LayoutInflater.from(context).inflate(R.layout.item_dynamic_main_list_three, parent, false);
+                            viewHolder = new DynamicMainListThreeViewHolder(viewx3);
+                            break;
+
+                        case 4:
+                            View viewx4 = LayoutInflater.from(context).inflate(R.layout.item_dynamic_main_list_four, parent, false);
+                            viewHolder = new DynamicMainListFourViewHolder(viewx4);
+                            break;
+
+                        case 5:
+                            View viewx5 = LayoutInflater.from(context).inflate(R.layout.item_dynamic_main_list_five, parent, false);
+                            viewHolder = new DynamicMainListFiveViewHolder(viewx5);
+                            break;
+                        case 6:
+                            View viewx6 = LayoutInflater.from(context).inflate(R.layout.item_dynamic_main_list_six, parent, false);
+                            viewHolder = new DynamicMainListSixViewHolder(viewx6);
+                            break;
+
+                        default:
+                            View viewx7 = LayoutInflater.from(context).inflate(R.layout.item_dynamic_main_single_zero, parent, false);
+                            viewHolder = new DynamicMainListZeroViewHolder(viewx7);
+
+                            break;
+                    }
+
                 }
-
-                switch (pic_count) {
-                    case 0:
-                        View viewx0= LayoutInflater.from(context).inflate(R.layout.item_dynamic_main_single_zero,parent,false);
-                        viewHolder=new DynamicMainSingleZeroViewHolder(viewx0);
-                        break;
-                    case 1:
-                        View viewx1= LayoutInflater.from(context).inflate(R.layout.item_dynamic_main_single_one,parent,false);
-                        viewHolder=new DynamicMainSingleOneViewHolder(viewx1);
-                        break;
-
-                    case 2:
-                        View viewx2= LayoutInflater.from(context).inflate(R.layout.item_dynamic_main_single_two,parent,false);
-                        viewHolder=new DynamicMainSingleTwoViewHolder(viewx2);
-                        break;
-
-                    case 3:
-                        View viewx3= LayoutInflater.from(context).inflate(R.layout.item_dynamic_main_single_three,parent,false);
-                        viewHolder=new DynamicMainSingleThreeViewHolder(viewx3);
-                        break;
-
-                    case 4:
-                        View viewx4= LayoutInflater.from(context).inflate(R.layout.item_dynamic_main_single_four,parent,false);
-                        viewHolder=new DynamicMainSingleFourViewHolder(viewx4);
-                        break;
-
-                    case 5:
-                        View viewx5= LayoutInflater.from(context).inflate(R.layout.item_dynamic_main_single_five,parent,false);
-                        viewHolder=new DynamicMainSingleFiveViewHolder(viewx5);
-                        break;
-                    case 6:
-                        View viewx6= LayoutInflater.from(context).inflate(R.layout.item_dynamic_main_single_six,parent,false);
-                        viewHolder=new DynamicMainSingleSixViewHolder(viewx6);
-                        break;
-
-                }
-
-
-            } else if (data.getMsg().get(viewType-1).getContent().getContent_type() == 1) {
-
-
-              int pic_count;
-                if (data.getMsg().get(viewType-1).getPiclist()==null){
-                    pic_count=0;
-                }else {
-                    pic_count = data.getMsg().get(viewType-1).getPiclist().size();
-                }
-
-                switch (pic_count) {
-                    case 0:
-                        View viewx0= LayoutInflater.from(context).inflate(R.layout.item_dynamic_main_list_zero,parent,false);
-                        viewHolder=new DynamicMainListZeroViewHolder(viewx0);
-                        break;
-                    case 1:
-                        View viewx1= LayoutInflater.from(context).inflate(R.layout.item_dynamic_main_list_one,parent,false);
-                        viewHolder=new DynamicMainListOneViewHolder(viewx1);
-                        break;
-
-                    case 2:
-                        View viewx2= LayoutInflater.from(context).inflate(R.layout.item_dynamic_main_list_two,parent,false);
-                        viewHolder=new DynamicMainListTwoViewHolder(viewx2);
-                        break;
-
-                    case 3:
-                        View viewx3= LayoutInflater.from(context).inflate(R.layout.item_dynamic_main_list_three,parent,false);
-                        viewHolder=new DynamicMainListThreeViewHolder(viewx3);
-                        break;
-
-                    case 4:
-                        View viewx4= LayoutInflater.from(context).inflate(R.layout.item_dynamic_main_list_four,parent,false);
-                        viewHolder=new DynamicMainListFourViewHolder(viewx4);
-                        break;
-
-                    case 5:
-                        View viewx5= LayoutInflater.from(context).inflate(R.layout.item_dynamic_main_list_five,parent,false);
-                        viewHolder=new DynamicMainListFiveViewHolder(viewx5);
-                        break;
-                    case 6:
-                        View viewx6= LayoutInflater.from(context).inflate(R.layout.item_dynamic_main_list_six,parent,false);
-                        viewHolder=new DynamicMainListSixViewHolder(viewx6);
-                        break;
-
-                }
-
+            }else {
+                View viewx0 = LayoutInflater.from(context).inflate(R.layout.item_dynamic_main_single_zero, parent, false);
+                viewHolder = new DynamicMainSingleZeroViewHolder(viewx0);
             }
+
 
 
         }
@@ -200,555 +217,508 @@ public class DynamicOutRecyclerViewAdapter extends RecyclerView.Adapter {
         } else {
             //实际内容布局
 
-            if (data.getMsg().get(position-1).getContent().getContent_type() == 0||data.getMsg().get(position-1).getContent().getContent_type() == 3) {
+            if (data.getMsg().get(position-1).getContent()!=null) {
+                if (data.getMsg().get(position - 1).getContent().getContent_type() == 0) {
 
 
-                position=position-1;
-                int pic_count;
-                if (data.getMsg().get(position).getPiclist()==null){
-                    pic_count=0;
-                }else {
-                    pic_count = data.getMsg().get(position).getPiclist().size();
-                }
+                    position = position - 1;
+                    int pic_count;
+                    if (data.getMsg().get(position).getPiclist() == null) {
+                        pic_count = 0;
+                    } else {
+                        pic_count = data.getMsg().get(position).getPiclist().size();
+                    }
 
 
+                    switch (pic_count) {
+                        case 0:
 
-                switch (pic_count){
-                    case 0:
 
+                            DynamicMainSingleZeroViewHolder dynamicMainSingleZeroViewHolder = (DynamicMainSingleZeroViewHolder) holder;
+                            /**
+                             * 加载用户图片和歌曲图片
+                             */
+                            Picasso.with(context).load(data.getMsg().get(position).getAuthor().getUserpic()).into(dynamicMainSingleZeroViewHolder.iv_userpic);
+                            Picasso.with(context).load(data.getMsg().get(position).getContent().getPic()).into(dynamicMainSingleZeroViewHolder.music_photo);
 
-                        DynamicMainSingleZeroViewHolder dynamicMainSingleZeroViewHolder = (DynamicMainSingleZeroViewHolder) holder;
-                        /**
-                         * 加载用户图片和歌曲图片
-                         */
-                        Picasso.with(context).load(data.getMsg().get(position).getAuthor().getUserpic()).into(dynamicMainSingleZeroViewHolder.iv_userpic);
-                        Picasso.with(context).load(data.getMsg().get(position).getContent().getPic()).into(dynamicMainSingleZeroViewHolder.music_photo);
 
+                            dynamicMainSingleZeroViewHolder.username.setText(data.getMsg().get(position).getAuthor().getUsername());
+                            dynamicMainSingleZeroViewHolder.date.setText(data.getMsg().get(position).getCtime() + "");
 
-                        dynamicMainSingleZeroViewHolder.username.setText(data.getMsg().get(position).getAuthor().getUsername());
-                        dynamicMainSingleZeroViewHolder.date.setText(data.getMsg().get(position).getCtime()+"");
+                            dynamicMainSingleZeroViewHolder.content.setText(data.getMsg().get(position).getMsg());
 
-                        dynamicMainSingleZeroViewHolder.content.setText(data.getMsg().get(position).getMsg());
 
+                            if (data.getMsg().get(position).getTopic() == null) {
+                                dynamicMainSingleZeroViewHolder.topic_title.setText("");
+                            } else {
+                                dynamicMainSingleZeroViewHolder.topic_title.setText(data.getMsg().get(position).getTopic().getTopic_title());
+                            }
 
-                        if (data.getMsg().get(position).getTopic()==null){
-                            dynamicMainSingleZeroViewHolder.topic_title.setText("");
-                        }else {
-                            dynamicMainSingleZeroViewHolder.topic_title.setText(data.getMsg().get(position).getTopic().getTopic_title());
-                        }
 
+                            dynamicMainSingleZeroViewHolder.song_name.setText(data.getMsg().get(position).getContent().getTitle());
+                            dynamicMainSingleZeroViewHolder.singer.setText(data.getMsg().get(position).getContent().getArtist_name());
 
+                            dynamicMainSingleZeroViewHolder.zan_count.setText(data.getMsg().get(position).getZan_num() + "");
+                            dynamicMainSingleZeroViewHolder.pinglun_count.setText(data.getMsg().get(position).getComment_num() + "");
+                            dynamicMainSingleZeroViewHolder.zhuanfa_count.setText(data.getMsg().get(position).getShare_num() + "");
 
 
-                        dynamicMainSingleZeroViewHolder.song_name.setText(data.getMsg().get(position).getContent().getTitle());
-                        dynamicMainSingleZeroViewHolder.singer.setText(data.getMsg().get(position).getContent().getArtist_name());
+                            break;
 
-                        dynamicMainSingleZeroViewHolder.zan_count.setText(data.getMsg().get(position).getZan_num()+"");
-                        dynamicMainSingleZeroViewHolder.pinglun_count.setText(data.getMsg().get(position).getComment_num()+"");
-                        dynamicMainSingleZeroViewHolder.zhuanfa_count.setText(data.getMsg().get(position).getShare_num()+"");
 
+                        case 1:
 
+                            DynamicMainSingleOneViewHolder dynamicMainSingleOneViewHolder = (DynamicMainSingleOneViewHolder) holder;
+                            dynamicMainSingleOneViewHolder.username.setText(data.getMsg().get(position).getAuthor().getUsername());
+                            dynamicMainSingleOneViewHolder.date.setText(data.getMsg().get(position).getCtime() + "");
 
+                            dynamicMainSingleOneViewHolder.content.setText(data.getMsg().get(position).getMsg());
 
 
+                            Picasso.with(context).load(data.getMsg().get(position).getAuthor().getUserpic()).into(dynamicMainSingleOneViewHolder.iv_userpic);
+                            Picasso.with(context).load(data.getMsg().get(position).getContent().getPic()).into(dynamicMainSingleOneViewHolder.music_photo);
 
+                            Picasso.with(context).load(data.getMsg().get(position).getPiclist().get(0).getPic_large()).into(dynamicMainSingleOneViewHolder.iv_wall_one_one);
 
 
-                        break;
+                            if (data.getMsg().get(position).getTopic() == null) {
+                                dynamicMainSingleOneViewHolder.topic_title.setText("");
+                            } else {
+                                dynamicMainSingleOneViewHolder.topic_title.setText(data.getMsg().get(position).getTopic().getTopic_title());
+                            }
 
 
-                    case 1:
+                            dynamicMainSingleOneViewHolder.song_name.setText(data.getMsg().get(position).getContent().getTitle());
+                            dynamicMainSingleOneViewHolder.singer.setText(data.getMsg().get(position).getContent().getArtist_name());
 
-                        DynamicMainSingleOneViewHolder dynamicMainSingleOneViewHolder = (DynamicMainSingleOneViewHolder) holder;
-                        dynamicMainSingleOneViewHolder.username.setText(data.getMsg().get(position).getAuthor().getUsername());
-                        dynamicMainSingleOneViewHolder.date.setText(data.getMsg().get(position).getCtime()+"");
+                            dynamicMainSingleOneViewHolder.zan_count.setText(data.getMsg().get(position).getZan_num() + "");
+                            dynamicMainSingleOneViewHolder.pinglun_count.setText(data.getMsg().get(position).getComment_num() + "");
+                            dynamicMainSingleOneViewHolder.zhuanfa_count.setText(data.getMsg().get(position).getShare_num() + "");
 
-                        dynamicMainSingleOneViewHolder.content.setText(data.getMsg().get(position).getMsg());
+                            break;
 
 
-                        Picasso.with(context).load(data.getMsg().get(position).getAuthor().getUserpic()).into(dynamicMainSingleOneViewHolder.iv_userpic);
-                        Picasso.with(context).load(data.getMsg().get(position).getContent().getPic()).into(dynamicMainSingleOneViewHolder.music_photo);
+                        case 2:
 
-                        Picasso.with(context).load(data.getMsg().get(position).getPiclist().get(0).getPic_large()).into(dynamicMainSingleOneViewHolder.iv_wall_one_one);
+                            DynamicMainSingleTwoViewHolder dynamicMainSingleTwoViewHolder = (DynamicMainSingleTwoViewHolder) holder;
+                            dynamicMainSingleTwoViewHolder.username.setText(data.getMsg().get(position).getAuthor().getUsername());
 
+                            dynamicMainSingleTwoViewHolder.date.setText(data.getMsg().get(position).getCtime() + "");
 
+                            Picasso.with(context).load(data.getMsg().get(position).getAuthor().getUserpic()).into(dynamicMainSingleTwoViewHolder.iv_userpic);
+                            Picasso.with(context).load(data.getMsg().get(position).getContent().getPic()).into(dynamicMainSingleTwoViewHolder.music_photo);
 
-                        if (data.getMsg().get(position).getTopic()==null){
-                            dynamicMainSingleOneViewHolder.topic_title.setText("");
-                        }else {
-                            dynamicMainSingleOneViewHolder.topic_title.setText(data.getMsg().get(position).getTopic().getTopic_title());
-                        }
+                            Picasso.with(context).load(data.getMsg().get(position).getPiclist().get(0).getPic_large()).into(dynamicMainSingleTwoViewHolder.iv_wall_two_one);
+                            Picasso.with(context).load(data.getMsg().get(position).getPiclist().get(1).getPic_large()).into(dynamicMainSingleTwoViewHolder.iv_wall_two_two);
 
 
+                            dynamicMainSingleTwoViewHolder.content.setText(data.getMsg().get(position).getMsg());
 
-                        dynamicMainSingleOneViewHolder.song_name.setText(data.getMsg().get(position).getContent().getTitle());
-                        dynamicMainSingleOneViewHolder.singer.setText(data.getMsg().get(position).getContent().getArtist_name());
+                            if (data.getMsg().get(position).getTopic() == null) {
+                                dynamicMainSingleTwoViewHolder.topic_title.setText("");
+                            } else {
+                                dynamicMainSingleTwoViewHolder.topic_title.setText(data.getMsg().get(position).getTopic().getTopic_title());
+                            }
 
-                        dynamicMainSingleOneViewHolder.zan_count.setText(data.getMsg().get(position).getZan_num()+"");
-                        dynamicMainSingleOneViewHolder.pinglun_count.setText(data.getMsg().get(position).getComment_num()+"");
-                        dynamicMainSingleOneViewHolder.zhuanfa_count.setText(data.getMsg().get(position).getShare_num()+"");
 
-                        break;
+                            dynamicMainSingleTwoViewHolder.song_name.setText(data.getMsg().get(position).getContent().getTitle());
+                            dynamicMainSingleTwoViewHolder.singer.setText(data.getMsg().get(position).getContent().getArtist_name());
 
+                            dynamicMainSingleTwoViewHolder.zan_count.setText(data.getMsg().get(position).getZan_num() + "");
+                            dynamicMainSingleTwoViewHolder.pinglun_count.setText(data.getMsg().get(position).getComment_num() + "");
+                            dynamicMainSingleTwoViewHolder.zhuanfa_count.setText(data.getMsg().get(position).getShare_num() + "");
+                            break;
 
-                    case 2:
 
-                        DynamicMainSingleTwoViewHolder dynamicMainSingleTwoViewHolder = (DynamicMainSingleTwoViewHolder) holder;
-                        dynamicMainSingleTwoViewHolder.username.setText(data.getMsg().get(position).getAuthor().getUsername());
+                        case 3:
 
-                        dynamicMainSingleTwoViewHolder.date.setText(data.getMsg().get(position).getCtime()+"");
+                            DynamicMainSingleThreeViewHolder dynamicMainSingleThreeViewHolder = (DynamicMainSingleThreeViewHolder) holder;
+                            dynamicMainSingleThreeViewHolder.username.setText(data.getMsg().get(position).getAuthor().getUsername());
 
-                        Picasso.with(context).load(data.getMsg().get(position).getAuthor().getUserpic()).into(dynamicMainSingleTwoViewHolder.iv_userpic);
-                        Picasso.with(context).load(data.getMsg().get(position).getContent().getPic()).into(dynamicMainSingleTwoViewHolder.music_photo);
+                            dynamicMainSingleThreeViewHolder.date.setText(data.getMsg().get(position).getCtime() + "");
 
-                        Picasso.with(context).load(data.getMsg().get(position).getPiclist().get(0).getPic_large()).into(dynamicMainSingleTwoViewHolder.iv_wall_two_one);
-                        Picasso.with(context).load(data.getMsg().get(position).getPiclist().get(1).getPic_large()).into(dynamicMainSingleTwoViewHolder.iv_wall_two_two);
+                            Picasso.with(context).load(data.getMsg().get(position).getAuthor().getUserpic()).into(dynamicMainSingleThreeViewHolder.iv_userpic);
+                            Picasso.with(context).load(data.getMsg().get(position).getContent().getPic()).into(dynamicMainSingleThreeViewHolder.music_photo);
 
+                            Picasso.with(context).load(data.getMsg().get(position).getPiclist().get(0).getPic_large()).into(dynamicMainSingleThreeViewHolder.iv_wall_three_one);
+                            Picasso.with(context).load(data.getMsg().get(position).getPiclist().get(1).getPic_large()).into(dynamicMainSingleThreeViewHolder.iv_wall_three_two);
+                            Picasso.with(context).load(data.getMsg().get(position).getPiclist().get(2).getPic_large()).into(dynamicMainSingleThreeViewHolder.iv_wall_three_three);
 
 
+                            dynamicMainSingleThreeViewHolder.content.setText(data.getMsg().get(position).getMsg());
 
-                        dynamicMainSingleTwoViewHolder.content.setText(data.getMsg().get(position).getMsg());
+                            if (data.getMsg().get(position).getTopic() == null) {
+                                dynamicMainSingleThreeViewHolder.topic_title.setText("");
+                            } else {
+                                dynamicMainSingleThreeViewHolder.topic_title.setText(data.getMsg().get(position).getTopic().getTopic_title());
+                            }
 
-                        if (data.getMsg().get(position).getTopic()==null){
-                            dynamicMainSingleTwoViewHolder.topic_title.setText("");
-                        }else {
-                            dynamicMainSingleTwoViewHolder.topic_title.setText(data.getMsg().get(position).getTopic().getTopic_title());
-                        }
 
+                            dynamicMainSingleThreeViewHolder.song_name.setText(data.getMsg().get(position).getContent().getTitle());
+                            dynamicMainSingleThreeViewHolder.singer.setText(data.getMsg().get(position).getContent().getArtist_name());
 
+                            dynamicMainSingleThreeViewHolder.zan_count.setText(data.getMsg().get(position).getZan_num() + "");
+                            dynamicMainSingleThreeViewHolder.pinglun_count.setText(data.getMsg().get(position).getComment_num() + "");
+                            dynamicMainSingleThreeViewHolder.zhuanfa_count.setText(data.getMsg().get(position).getShare_num() + "");
+                            break;
 
-                        dynamicMainSingleTwoViewHolder.song_name.setText(data.getMsg().get(position).getContent().getTitle());
-                        dynamicMainSingleTwoViewHolder.singer.setText(data.getMsg().get(position).getContent().getArtist_name());
 
-                        dynamicMainSingleTwoViewHolder.zan_count.setText(data.getMsg().get(position).getZan_num()+"");
-                        dynamicMainSingleTwoViewHolder.pinglun_count.setText(data.getMsg().get(position).getComment_num()+"");
-                        dynamicMainSingleTwoViewHolder.zhuanfa_count.setText(data.getMsg().get(position).getShare_num()+"");
-                        break;
+                        case 4:
 
+                            DynamicMainSingleFourViewHolder dynamicMainSingleFourViewHolder = (DynamicMainSingleFourViewHolder) holder;
+                            dynamicMainSingleFourViewHolder.username.setText(data.getMsg().get(position).getAuthor().getUsername());
+                            dynamicMainSingleFourViewHolder.date.setText(data.getMsg().get(position).getCtime() + "");
 
-                    case 3:
 
-                        DynamicMainSingleThreeViewHolder dynamicMainSingleThreeViewHolder = (DynamicMainSingleThreeViewHolder) holder;
-                        dynamicMainSingleThreeViewHolder.username.setText(data.getMsg().get(position).getAuthor().getUsername());
+                            Picasso.with(context).load(data.getMsg().get(position).getAuthor().getUserpic()).into(dynamicMainSingleFourViewHolder.iv_userpic);
+                            Picasso.with(context).load(data.getMsg().get(position).getContent().getPic()).into(dynamicMainSingleFourViewHolder.music_photo);
 
-                       dynamicMainSingleThreeViewHolder.date.setText(data.getMsg().get(position).getCtime()+"");
+                            Picasso.with(context).load(data.getMsg().get(position).getPiclist().get(0).getPic_large()).into(dynamicMainSingleFourViewHolder.iv_wall_four_one);
+                            Picasso.with(context).load(data.getMsg().get(position).getPiclist().get(1).getPic_large()).into(dynamicMainSingleFourViewHolder.iv_wall_four_two);
+                            Picasso.with(context).load(data.getMsg().get(position).getPiclist().get(2).getPic_large()).into(dynamicMainSingleFourViewHolder.iv_wall_four_three);
+                            Picasso.with(context).load(data.getMsg().get(position).getPiclist().get(3).getPic_large()).into(dynamicMainSingleFourViewHolder.iv_wall_four_four);
 
-                        Picasso.with(context).load(data.getMsg().get(position).getAuthor().getUserpic()).into(dynamicMainSingleThreeViewHolder.iv_userpic);
-                        Picasso.with(context).load(data.getMsg().get(position).getContent().getPic()).into(dynamicMainSingleThreeViewHolder.music_photo);
 
-                        Picasso.with(context).load(data.getMsg().get(position).getPiclist().get(0).getPic_large()).into(dynamicMainSingleThreeViewHolder.iv_wall_three_one);
-                        Picasso.with(context).load(data.getMsg().get(position).getPiclist().get(1).getPic_large()).into(dynamicMainSingleThreeViewHolder.iv_wall_three_two);
-                        Picasso.with(context).load(data.getMsg().get(position).getPiclist().get(2).getPic_large()).into(dynamicMainSingleThreeViewHolder.iv_wall_three_three);
+                            dynamicMainSingleFourViewHolder.content.setText(data.getMsg().get(position).getMsg());
 
+                            if (data.getMsg().get(position).getTopic() == null) {
+                                dynamicMainSingleFourViewHolder.topic_title.setText("");
+                            } else {
+                                dynamicMainSingleFourViewHolder.topic_title.setText(data.getMsg().get(position).getTopic().getTopic_title());
+                            }
 
 
+                            dynamicMainSingleFourViewHolder.song_name.setText(data.getMsg().get(position).getContent().getTitle());
+                            dynamicMainSingleFourViewHolder.singer.setText(data.getMsg().get(position).getContent().getArtist_name());
 
+                            dynamicMainSingleFourViewHolder.zan_count.setText(data.getMsg().get(position).getZan_num() + "");
+                            dynamicMainSingleFourViewHolder.pinglun_count.setText(data.getMsg().get(position).getComment_num() + "");
+                            dynamicMainSingleFourViewHolder.zhuanfa_count.setText(data.getMsg().get(position).getShare_num() + "");
+                            break;
 
 
+                        case 5:
 
-                        dynamicMainSingleThreeViewHolder.content.setText(data.getMsg().get(position).getMsg());
+                            DynamicMainSingleFiveViewHolder dynamicMainSingleFiveViewHolder = (DynamicMainSingleFiveViewHolder) holder;
+                            dynamicMainSingleFiveViewHolder.username.setText(data.getMsg().get(position).getAuthor().getUsername());
+                            dynamicMainSingleFiveViewHolder.date.setText(data.getMsg().get(position).getCtime() + "");
 
-                        if (data.getMsg().get(position).getTopic()==null){
-                            dynamicMainSingleThreeViewHolder.topic_title.setText("");
-                        }else {
-                            dynamicMainSingleThreeViewHolder.topic_title.setText(data.getMsg().get(position).getTopic().getTopic_title());
-                        }
+                            Picasso.with(context).load(data.getMsg().get(position).getAuthor().getUserpic()).into(dynamicMainSingleFiveViewHolder.iv_userpic);
+                            Picasso.with(context).load(data.getMsg().get(position).getContent().getPic()).into(dynamicMainSingleFiveViewHolder.music_photo);
 
+                            Picasso.with(context).load(data.getMsg().get(position).getPiclist().get(0).getPic_large()).into(dynamicMainSingleFiveViewHolder.iv_wall_five_one);
+                            Picasso.with(context).load(data.getMsg().get(position).getPiclist().get(1).getPic_large()).into(dynamicMainSingleFiveViewHolder.iv_wall_five_two);
+                            Picasso.with(context).load(data.getMsg().get(position).getPiclist().get(2).getPic_large()).into(dynamicMainSingleFiveViewHolder.iv_wall_five_three);
+                            Picasso.with(context).load(data.getMsg().get(position).getPiclist().get(3).getPic_large()).into(dynamicMainSingleFiveViewHolder.iv_wall_five_four);
+                            Picasso.with(context).load(data.getMsg().get(position).getPiclist().get(4).getPic_large()).into(dynamicMainSingleFiveViewHolder.iv_wall_five_five);
 
 
-                        dynamicMainSingleThreeViewHolder.song_name.setText(data.getMsg().get(position).getContent().getTitle());
-                        dynamicMainSingleThreeViewHolder.singer.setText(data.getMsg().get(position).getContent().getArtist_name());
+                            dynamicMainSingleFiveViewHolder.content.setText(data.getMsg().get(position).getMsg());
 
-                        dynamicMainSingleThreeViewHolder.zan_count.setText(data.getMsg().get(position).getZan_num()+"");
-                        dynamicMainSingleThreeViewHolder.pinglun_count.setText(data.getMsg().get(position).getComment_num()+"");
-                       dynamicMainSingleThreeViewHolder.zhuanfa_count.setText(data.getMsg().get(position).getShare_num()+"");
-                        break;
+                            if (data.getMsg().get(position).getTopic() == null) {
+                                dynamicMainSingleFiveViewHolder.topic_title.setText("");
+                            } else {
+                                dynamicMainSingleFiveViewHolder.topic_title.setText(data.getMsg().get(position).getTopic().getTopic_title());
+                            }
 
 
-                    case 4:
+                            dynamicMainSingleFiveViewHolder.song_name.setText(data.getMsg().get(position).getContent().getTitle());
+                            dynamicMainSingleFiveViewHolder.singer.setText(data.getMsg().get(position).getContent().getArtist_name());
 
-                        DynamicMainSingleFourViewHolder dynamicMainSingleFourViewHolder = (DynamicMainSingleFourViewHolder) holder;
-                        dynamicMainSingleFourViewHolder.username.setText(data.getMsg().get(position).getAuthor().getUsername());
-                        dynamicMainSingleFourViewHolder.date.setText(data.getMsg().get(position).getCtime()+"");
+                            dynamicMainSingleFiveViewHolder.zan_count.setText(data.getMsg().get(position).getZan_num() + "");
+                            dynamicMainSingleFiveViewHolder.pinglun_count.setText(data.getMsg().get(position).getComment_num() + "");
+                            dynamicMainSingleFiveViewHolder.zhuanfa_count.setText(data.getMsg().get(position).getShare_num() + "");
+                            break;
 
+                        case 6:
 
-                        Picasso.with(context).load(data.getMsg().get(position).getAuthor().getUserpic()).into(dynamicMainSingleFourViewHolder.iv_userpic);
-                        Picasso.with(context).load(data.getMsg().get(position).getContent().getPic()).into(dynamicMainSingleFourViewHolder.music_photo);
+                            DynamicMainSingleSixViewHolder dynamicMainSingleSixViewHolder = (DynamicMainSingleSixViewHolder) holder;
+                            dynamicMainSingleSixViewHolder.username.setText(data.getMsg().get(position).getAuthor().getUsername());
+                            dynamicMainSingleSixViewHolder.date.setText(data.getMsg().get(position).getCtime() + "");
 
-                        Picasso.with(context).load(data.getMsg().get(position).getPiclist().get(0).getPic_large()).into(dynamicMainSingleFourViewHolder.iv_wall_four_one);
-                        Picasso.with(context).load(data.getMsg().get(position).getPiclist().get(1).getPic_large()).into(dynamicMainSingleFourViewHolder.iv_wall_four_two);
-                        Picasso.with(context).load(data.getMsg().get(position).getPiclist().get(2).getPic_large()).into(dynamicMainSingleFourViewHolder.iv_wall_four_three);
-                        Picasso.with(context).load(data.getMsg().get(position).getPiclist().get(3).getPic_large()).into(dynamicMainSingleFourViewHolder.iv_wall_four_four);
+                            Picasso.with(context).load(data.getMsg().get(position).getAuthor().getUserpic()).into(dynamicMainSingleSixViewHolder.iv_userpic);
+                            Picasso.with(context).load(data.getMsg().get(position).getContent().getPic()).into(dynamicMainSingleSixViewHolder.music_photo);
 
 
+                            Picasso.with(context).load(data.getMsg().get(position).getPiclist().get(0).getPic_large()).into(dynamicMainSingleSixViewHolder.iv_wall_six_one);
+                            Picasso.with(context).load(data.getMsg().get(position).getPiclist().get(1).getPic_large()).into(dynamicMainSingleSixViewHolder.iv_wall_six_two);
+                            Picasso.with(context).load(data.getMsg().get(position).getPiclist().get(2).getPic_large()).into(dynamicMainSingleSixViewHolder.iv_wall_six_three);
+                            Picasso.with(context).load(data.getMsg().get(position).getPiclist().get(3).getPic_large()).into(dynamicMainSingleSixViewHolder.iv_wall_six_four);
+                            Picasso.with(context).load(data.getMsg().get(position).getPiclist().get(4).getPic_large()).into(dynamicMainSingleSixViewHolder.iv_wall_six_five);
+                            Picasso.with(context).load(data.getMsg().get(position).getPiclist().get(5).getPic_large()).into(dynamicMainSingleSixViewHolder.iv_wall_six_six);
 
-                        dynamicMainSingleFourViewHolder.content.setText(data.getMsg().get(position).getMsg());
 
-                        if (data.getMsg().get(position).getTopic()==null){
-                            dynamicMainSingleFourViewHolder.topic_title.setText("");
-                        }else {
-                            dynamicMainSingleFourViewHolder.topic_title.setText(data.getMsg().get(position).getTopic().getTopic_title());
-                        }
+                            dynamicMainSingleSixViewHolder.content.setText(data.getMsg().get(position).getMsg());
 
+                            if (data.getMsg().get(position).getTopic() == null) {
+                                dynamicMainSingleSixViewHolder.topic_title.setText("");
+                            } else {
+                                dynamicMainSingleSixViewHolder.topic_title.setText(data.getMsg().get(position).getTopic().getTopic_title());
+                            }
 
 
+                            dynamicMainSingleSixViewHolder.song_name.setText(data.getMsg().get(position).getContent().getTitle());
+                            dynamicMainSingleSixViewHolder.singer.setText(data.getMsg().get(position).getContent().getArtist_name());
 
+                            dynamicMainSingleSixViewHolder.zan_count.setText(data.getMsg().get(position).getZan_num() + "");
+                            dynamicMainSingleSixViewHolder.pinglun_count.setText(data.getMsg().get(position).getComment_num() + "");
+                            dynamicMainSingleSixViewHolder.zhuanfa_count.setText(data.getMsg().get(position).getShare_num() + "");
+                            break;
 
-                        dynamicMainSingleFourViewHolder.song_name.setText(data.getMsg().get(position).getContent().getTitle());
-                        dynamicMainSingleFourViewHolder.singer.setText(data.getMsg().get(position).getContent().getArtist_name());
 
-                        dynamicMainSingleFourViewHolder.zan_count.setText(data.getMsg().get(position).getZan_num()+"");
-                        dynamicMainSingleFourViewHolder.pinglun_count.setText(data.getMsg().get(position).getComment_num()+"");
-                        dynamicMainSingleFourViewHolder.zhuanfa_count.setText(data.getMsg().get(position).getShare_num()+"");
-                        break;
+                    }
 
 
-                    case 5:
+                } else {
 
-                        DynamicMainSingleFiveViewHolder dynamicMainSingleFiveViewHolder = (DynamicMainSingleFiveViewHolder) holder;
-                        dynamicMainSingleFiveViewHolder.username.setText(data.getMsg().get(position).getAuthor().getUsername());
-                        dynamicMainSingleFiveViewHolder.date.setText(data.getMsg().get(position).getCtime()+"");
+                    /**
+                     * 列表
+                     */
 
-                        Picasso.with(context).load(data.getMsg().get(position).getAuthor().getUserpic()).into(dynamicMainSingleFiveViewHolder.iv_userpic);
-                        Picasso.with(context).load(data.getMsg().get(position).getContent().getPic()).into(dynamicMainSingleFiveViewHolder.music_photo);
+                    position = position - 1;
 
-                        Picasso.with(context).load(data.getMsg().get(position).getPiclist().get(0).getPic_large()).into(dynamicMainSingleFiveViewHolder.iv_wall_five_one);
-                        Picasso.with(context).load(data.getMsg().get(position).getPiclist().get(1).getPic_large()).into(dynamicMainSingleFiveViewHolder.iv_wall_five_two);
-                        Picasso.with(context).load(data.getMsg().get(position).getPiclist().get(2).getPic_large()).into(dynamicMainSingleFiveViewHolder.iv_wall_five_three);
-                        Picasso.with(context).load(data.getMsg().get(position).getPiclist().get(3).getPic_large()).into(dynamicMainSingleFiveViewHolder.iv_wall_five_four);
-                        Picasso.with(context).load(data.getMsg().get(position).getPiclist().get(4).getPic_large()).into(dynamicMainSingleFiveViewHolder.iv_wall_five_five);
+                    int pic_count;
+                    if (data.getMsg().get(position).getPiclist() == null) {
+                        pic_count = 0;
+                    } else {
+                        pic_count = data.getMsg().get(position).getPiclist().size();
+                    }
 
 
+                    switch (pic_count) {
+                        case 0:
 
 
-                        dynamicMainSingleFiveViewHolder.content.setText(data.getMsg().get(position).getMsg());
+                            DynamicMainListZeroViewHolder dynamicMainListZeroViewHolder = (DynamicMainListZeroViewHolder) holder;
+                            dynamicMainListZeroViewHolder.username.setText(data.getMsg().get(position).getAuthor().getUsername());
+                            dynamicMainListZeroViewHolder.date.setText(data.getMsg().get(position).getCtime() + "");
 
-                        if (data.getMsg().get(position).getTopic()==null){
-                            dynamicMainSingleFiveViewHolder.topic_title.setText("");
-                        }else {
-                            dynamicMainSingleFiveViewHolder.topic_title.setText(data.getMsg().get(position).getTopic().getTopic_title());
-                        }
+                            dynamicMainListZeroViewHolder.content.setText(data.getMsg().get(position).getMsg());
 
 
+                            Picasso.with(context).load(data.getMsg().get(position).getAuthor().getUserpic()).into(dynamicMainListZeroViewHolder.iv_userpic);
+                            Picasso.with(context).load(data.getMsg().get(position).getContent().getPic()).into(dynamicMainListZeroViewHolder.music_photo);
 
 
-                        dynamicMainSingleFiveViewHolder.song_name.setText(data.getMsg().get(position).getContent().getTitle());
-                        dynamicMainSingleFiveViewHolder.singer.setText(data.getMsg().get(position).getContent().getArtist_name());
-
-                        dynamicMainSingleFiveViewHolder.zan_count.setText(data.getMsg().get(position).getZan_num()+"");
-                        dynamicMainSingleFiveViewHolder.pinglun_count.setText(data.getMsg().get(position).getComment_num()+"");
-                        dynamicMainSingleFiveViewHolder.zhuanfa_count.setText(data.getMsg().get(position).getShare_num()+"");
-                        break;
-
-                    case 6:
-
-                        DynamicMainSingleSixViewHolder dynamicMainSingleSixViewHolder = (DynamicMainSingleSixViewHolder) holder;
-                        dynamicMainSingleSixViewHolder.username.setText(data.getMsg().get(position).getAuthor().getUsername());
-                        dynamicMainSingleSixViewHolder.date.setText(data.getMsg().get(position).getCtime()+"");
-
-                        Picasso.with(context).load(data.getMsg().get(position).getAuthor().getUserpic()).into(dynamicMainSingleSixViewHolder.iv_userpic);
-                        Picasso.with(context).load(data.getMsg().get(position).getContent().getPic()).into(dynamicMainSingleSixViewHolder.music_photo);
-
-
-                        Picasso.with(context).load(data.getMsg().get(position).getPiclist().get(0).getPic_large()).into(dynamicMainSingleSixViewHolder.iv_wall_six_one);
-                        Picasso.with(context).load(data.getMsg().get(position).getPiclist().get(1).getPic_large()).into(dynamicMainSingleSixViewHolder.iv_wall_six_two);
-                        Picasso.with(context).load(data.getMsg().get(position).getPiclist().get(2).getPic_large()).into(dynamicMainSingleSixViewHolder.iv_wall_six_three);
-                        Picasso.with(context).load(data.getMsg().get(position).getPiclist().get(3).getPic_large()).into(dynamicMainSingleSixViewHolder.iv_wall_six_four);
-                        Picasso.with(context).load(data.getMsg().get(position).getPiclist().get(4).getPic_large()).into(dynamicMainSingleSixViewHolder.iv_wall_six_five);
-                        Picasso.with(context).load(data.getMsg().get(position).getPiclist().get(5).getPic_large()).into(dynamicMainSingleSixViewHolder.iv_wall_six_six);
-
-
-
-
-                        dynamicMainSingleSixViewHolder.content.setText(data.getMsg().get(position).getMsg());
-
-                        if (data.getMsg().get(position).getTopic()==null){
-                            dynamicMainSingleSixViewHolder.topic_title.setText("");
-                        }else {
-                            dynamicMainSingleSixViewHolder.topic_title.setText(data.getMsg().get(position).getTopic().getTopic_title());
-                        }
-
-
-
-                        dynamicMainSingleSixViewHolder.song_name.setText(data.getMsg().get(position).getContent().getTitle());
-                        dynamicMainSingleSixViewHolder.singer.setText(data.getMsg().get(position).getContent().getArtist_name());
-
-                        dynamicMainSingleSixViewHolder.zan_count.setText(data.getMsg().get(position).getZan_num()+"");
-                        dynamicMainSingleSixViewHolder.pinglun_count.setText(data.getMsg().get(position).getComment_num()+"");
-                        dynamicMainSingleSixViewHolder.zhuanfa_count.setText(data.getMsg().get(position).getShare_num()+"");
-                        break;
-
-
-
-
-
-                }
-
-
-
-
-            }else {
-
-                /**
-                 * 列表
-                 */
-
-                position=position-1;
-
-                int pic_count;
-                if (data.getMsg().get(position).getPiclist()==null){
-                    pic_count=0;
-                }else {
-                   pic_count= data.getMsg().get(position).getPiclist().size();
-                }
-
-
-                switch (pic_count){
-                    case 0:
-
-
-                        DynamicMainListZeroViewHolder dynamicMainListZeroViewHolder = (DynamicMainListZeroViewHolder) holder;
-                        dynamicMainListZeroViewHolder.username.setText(data.getMsg().get(position).getAuthor().getUsername());
-                        dynamicMainListZeroViewHolder.date.setText(data.getMsg().get(position).getCtime()+"");
-
-                        dynamicMainListZeroViewHolder.content.setText(data.getMsg().get(position).getMsg());
-
-
-                        Picasso.with(context).load(data.getMsg().get(position).getAuthor().getUserpic()).into(dynamicMainListZeroViewHolder.iv_userpic);
-                        Picasso.with(context).load(data.getMsg().get(position).getContent().getPic()).into(dynamicMainListZeroViewHolder.music_photo);
-
-
-                        if (data.getMsg().get(position).getTopic()==null){
-                            dynamicMainListZeroViewHolder.topic_title.setText("");
-                        }else {
-                            dynamicMainListZeroViewHolder.topic_title.setText(data.getMsg().get(position).getTopic().getTopic_title());
-                        }
-
+                            if (data.getMsg().get(position).getTopic() == null) {
+                                dynamicMainListZeroViewHolder.topic_title.setText("");
+                            } else {
+                                dynamicMainListZeroViewHolder.topic_title.setText(data.getMsg().get(position).getTopic().getTopic_title());
+                            }
 
 
                             dynamicMainListZeroViewHolder.musiclist.setText(data.getMsg().get(position).getContent().getTitle().toString());
 
 
+                            dynamicMainListZeroViewHolder.zan_count.setText(data.getMsg().get(position).getZan_num() + "");
+                            dynamicMainListZeroViewHolder.pinglun_count.setText(data.getMsg().get(position).getComment_num() + "");
+                            dynamicMainListZeroViewHolder.zhuanfa_count.setText(data.getMsg().get(position).getShare_num() + "");
 
 
-                        dynamicMainListZeroViewHolder.zan_count.setText(data.getMsg().get(position).getZan_num()+"");
-                        dynamicMainListZeroViewHolder.pinglun_count.setText(data.getMsg().get(position).getComment_num()+"");
-                        dynamicMainListZeroViewHolder.zhuanfa_count.setText(data.getMsg().get(position).getShare_num()+"");
+                            break;
 
 
+                        case 1:
 
+                            DynamicMainListOneViewHolder dynamicMainListOneViewHolder = (DynamicMainListOneViewHolder) holder;
+                            dynamicMainListOneViewHolder.username.setText(data.getMsg().get(position).getAuthor().getUsername());
+                            dynamicMainListOneViewHolder.date.setText(data.getMsg().get(position).getCtime() + "");
 
 
+                            Picasso.with(context).load(data.getMsg().get(position).getAuthor().getUserpic()).into(dynamicMainListOneViewHolder.iv_userpic);
+                            Picasso.with(context).load(data.getMsg().get(position).getContent().getPic()).into(dynamicMainListOneViewHolder.music_photo);
 
+                            Picasso.with(context).load(data.getMsg().get(position).getPiclist().get(0).getPic_large()).into(dynamicMainListOneViewHolder.iv_wall_one_one);
 
 
-                        break;
+                            dynamicMainListOneViewHolder.content.setText(data.getMsg().get(position).getMsg());
 
+                            if (data.getMsg().get(position).getTopic() == null) {
+                                dynamicMainListOneViewHolder.topic_title.setText("");
+                            } else {
+                                dynamicMainListOneViewHolder.topic_title.setText(data.getMsg().get(position).getTopic().getTopic_title());
+                            }
 
-                    case 1:
 
-                        DynamicMainListOneViewHolder dynamicMainListOneViewHolder = (DynamicMainListOneViewHolder) holder;
-                        dynamicMainListOneViewHolder.username.setText(data.getMsg().get(position).getAuthor().getUsername());
-                        dynamicMainListOneViewHolder.date.setText(data.getMsg().get(position).getCtime()+"");
+                            dynamicMainListOneViewHolder.musiclist.setText(data.getMsg().get(position).getContent().getTitle().toString());
 
 
-                        Picasso.with(context).load(data.getMsg().get(position).getAuthor().getUserpic()).into(dynamicMainListOneViewHolder.iv_userpic);
-                        Picasso.with(context).load(data.getMsg().get(position).getContent().getPic()).into(dynamicMainListOneViewHolder.music_photo);
+                            dynamicMainListOneViewHolder.zan_count.setText(data.getMsg().get(position).getZan_num() + "");
+                            dynamicMainListOneViewHolder.pinglun_count.setText(data.getMsg().get(position).getComment_num() + "");
+                            dynamicMainListOneViewHolder.zhuanfa_count.setText(data.getMsg().get(position).getShare_num() + "");
 
-                        Picasso.with(context).load(data.getMsg().get(position).getPiclist().get(0).getPic_large()).into(dynamicMainListOneViewHolder.iv_wall_one_one);
+                            break;
 
 
-                        dynamicMainListOneViewHolder.content.setText(data.getMsg().get(position).getMsg());
+                        case 2:
 
-                        if (data.getMsg().get(position).getTopic()==null){
-                            dynamicMainListOneViewHolder.topic_title.setText("");
-                        }else {
-                            dynamicMainListOneViewHolder.topic_title.setText(data.getMsg().get(position).getTopic().getTopic_title());
-                        }
+                            DynamicMainListTwoViewHolder dynamicMainListTwoViewHolder = (DynamicMainListTwoViewHolder) holder;
+                            dynamicMainListTwoViewHolder.username.setText(data.getMsg().get(position).getAuthor().getUsername());
+                            dynamicMainListTwoViewHolder.date.setText(data.getMsg().get(position).getCtime() + "");
 
+                            Picasso.with(context).load(data.getMsg().get(position).getAuthor().getUserpic()).into(dynamicMainListTwoViewHolder.iv_userpic);
+                            Picasso.with(context).load(data.getMsg().get(position).getContent().getPic()).into(dynamicMainListTwoViewHolder.music_photo);
 
-                        dynamicMainListOneViewHolder.musiclist.setText(data.getMsg().get(position).getContent().getTitle().toString());
+                            Picasso.with(context).load(data.getMsg().get(position).getPiclist().get(0).getPic_large()).into(dynamicMainListTwoViewHolder.iv_wall_two_one);
+                            Picasso.with(context).load(data.getMsg().get(position).getPiclist().get(1).getPic_large()).into(dynamicMainListTwoViewHolder.iv_wall_two_two);
 
 
-                        dynamicMainListOneViewHolder.zan_count.setText(data.getMsg().get(position).getZan_num()+"");
-                        dynamicMainListOneViewHolder.pinglun_count.setText(data.getMsg().get(position).getComment_num()+"");
-                        dynamicMainListOneViewHolder.zhuanfa_count.setText(data.getMsg().get(position).getShare_num()+"");
+                            dynamicMainListTwoViewHolder.content.setText(data.getMsg().get(position).getMsg());
 
-                        break;
+                            if (data.getMsg().get(position).getTopic() == null) {
+                                dynamicMainListTwoViewHolder.topic_title.setText("");
+                            } else {
+                                dynamicMainListTwoViewHolder.topic_title.setText(data.getMsg().get(position).getTopic().getTopic_title());
+                            }
 
 
-                    case 2:
+                            dynamicMainListTwoViewHolder.musiclist.setText(data.getMsg().get(position).getContent().getTitle().toString());
 
-                        DynamicMainListTwoViewHolder dynamicMainListTwoViewHolder = (DynamicMainListTwoViewHolder) holder;
-                        dynamicMainListTwoViewHolder.username.setText(data.getMsg().get(position).getAuthor().getUsername());
-                        dynamicMainListTwoViewHolder.date.setText(data.getMsg().get(position).getCtime()+"");
+                            dynamicMainListTwoViewHolder.zan_count.setText(data.getMsg().get(position).getZan_num() + "");
+                            dynamicMainListTwoViewHolder.pinglun_count.setText(data.getMsg().get(position).getComment_num() + "");
+                            dynamicMainListTwoViewHolder.zhuanfa_count.setText(data.getMsg().get(position).getShare_num() + "");
+                            break;
 
-                        Picasso.with(context).load(data.getMsg().get(position).getAuthor().getUserpic()).into(dynamicMainListTwoViewHolder.iv_userpic);
-                        Picasso.with(context).load(data.getMsg().get(position).getContent().getPic()).into(dynamicMainListTwoViewHolder.music_photo);
 
-                        Picasso.with(context).load(data.getMsg().get(position).getPiclist().get(0).getPic_large()).into(dynamicMainListTwoViewHolder.iv_wall_two_one);
-                        Picasso.with(context).load(data.getMsg().get(position).getPiclist().get(1).getPic_large()).into(dynamicMainListTwoViewHolder.iv_wall_two_two);
+                        case 3:
 
+                            DynamicMainListThreeViewHolder dynamicMainListThreeViewHolder = (DynamicMainListThreeViewHolder) holder;
+                            dynamicMainListThreeViewHolder.username.setText(data.getMsg().get(position).getAuthor().getUsername());
+                            dynamicMainListThreeViewHolder.date.setText(data.getMsg().get(position).getCtime() + "");
 
-                        dynamicMainListTwoViewHolder.content.setText(data.getMsg().get(position).getMsg());
+                            Picasso.with(context).load(data.getMsg().get(position).getAuthor().getUserpic()).into(dynamicMainListThreeViewHolder.iv_userpic);
+                            Picasso.with(context).load(data.getMsg().get(position).getContent().getPic()).into(dynamicMainListThreeViewHolder.music_photo);
 
-                        if (data.getMsg().get(position).getTopic()==null){
-                            dynamicMainListTwoViewHolder.topic_title.setText("");
-                        }else {
-                            dynamicMainListTwoViewHolder.topic_title.setText(data.getMsg().get(position).getTopic().getTopic_title());
-                        }
 
+                            Picasso.with(context).load(data.getMsg().get(position).getPiclist().get(0).getPic_large()).into(dynamicMainListThreeViewHolder.iv_wall_three_one);
+                            Picasso.with(context).load(data.getMsg().get(position).getPiclist().get(1).getPic_large()).into(dynamicMainListThreeViewHolder.iv_wall_three_two);
+                            Picasso.with(context).load(data.getMsg().get(position).getPiclist().get(2).getPic_large()).into(dynamicMainListThreeViewHolder.iv_wall_three_three);
 
-                        dynamicMainListTwoViewHolder.musiclist.setText(data.getMsg().get(position).getContent().getTitle().toString());
 
-                        dynamicMainListTwoViewHolder.zan_count.setText(data.getMsg().get(position).getZan_num()+"");
-                        dynamicMainListTwoViewHolder.pinglun_count.setText(data.getMsg().get(position).getComment_num()+"");
-                        dynamicMainListTwoViewHolder.zhuanfa_count.setText(data.getMsg().get(position).getShare_num()+"");
-                        break;
+                            dynamicMainListThreeViewHolder.content.setText(data.getMsg().get(position).getMsg());
 
+                            if (data.getMsg().get(position).getTopic() == null) {
+                                dynamicMainListThreeViewHolder.topic_title.setText("");
+                            } else {
+                                dynamicMainListThreeViewHolder.topic_title.setText(data.getMsg().get(position).getTopic().getTopic_title());
+                            }
 
-                    case 3:
+                            dynamicMainListThreeViewHolder.musiclist.setText(data.getMsg().get(position).getContent().getTitle().toString());
 
-                        DynamicMainListThreeViewHolder dynamicMainListThreeViewHolder = (DynamicMainListThreeViewHolder) holder;
-                        dynamicMainListThreeViewHolder.username.setText(data.getMsg().get(position).getAuthor().getUsername());
-                        dynamicMainListThreeViewHolder.date.setText(data.getMsg().get(position).getCtime()+"");
+                            dynamicMainListThreeViewHolder.zan_count.setText(data.getMsg().get(position).getZan_num() + "");
+                            dynamicMainListThreeViewHolder.pinglun_count.setText(data.getMsg().get(position).getComment_num() + "");
+                            dynamicMainListThreeViewHolder.zhuanfa_count.setText(data.getMsg().get(position).getShare_num() + "");
+                            break;
 
-                        Picasso.with(context).load(data.getMsg().get(position).getAuthor().getUserpic()).into(dynamicMainListThreeViewHolder.iv_userpic);
-                        Picasso.with(context).load(data.getMsg().get(position).getContent().getPic()).into(dynamicMainListThreeViewHolder.music_photo);
 
+                        case 4:
 
-                        Picasso.with(context).load(data.getMsg().get(position).getPiclist().get(0).getPic_large()).into(dynamicMainListThreeViewHolder.iv_wall_three_one);
-                        Picasso.with(context).load(data.getMsg().get(position).getPiclist().get(1).getPic_large()).into(dynamicMainListThreeViewHolder.iv_wall_three_two);
-                        Picasso.with(context).load(data.getMsg().get(position).getPiclist().get(2).getPic_large()).into(dynamicMainListThreeViewHolder.iv_wall_three_three);
+                            DynamicMainListFourViewHolder dynamicMainListFourViewHolder = (DynamicMainListFourViewHolder) holder;
+                            dynamicMainListFourViewHolder.username.setText(data.getMsg().get(position).getAuthor().getUsername());
+                            dynamicMainListFourViewHolder.date.setText(data.getMsg().get(position).getCtime() + "");
 
+                            Picasso.with(context).load(data.getMsg().get(position).getAuthor().getUserpic()).into(dynamicMainListFourViewHolder.iv_userpic);
+                            Picasso.with(context).load(data.getMsg().get(position).getContent().getPic()).into(dynamicMainListFourViewHolder.music_photo);
 
-                        dynamicMainListThreeViewHolder.content.setText(data.getMsg().get(position).getMsg());
+                            Picasso.with(context).load(data.getMsg().get(position).getPiclist().get(0).getPic_large()).into(dynamicMainListFourViewHolder.iv_wall_four_one);
+                            Picasso.with(context).load(data.getMsg().get(position).getPiclist().get(1).getPic_large()).into(dynamicMainListFourViewHolder.iv_wall_four_two);
+                            Picasso.with(context).load(data.getMsg().get(position).getPiclist().get(2).getPic_large()).into(dynamicMainListFourViewHolder.iv_wall_four_three);
+                            Picasso.with(context).load(data.getMsg().get(position).getPiclist().get(3).getPic_large()).into(dynamicMainListFourViewHolder.iv_wall_four_four);
 
-                        if (data.getMsg().get(position).getTopic()==null){
-                            dynamicMainListThreeViewHolder.topic_title.setText("");
-                        }else {
-                            dynamicMainListThreeViewHolder.topic_title.setText(data.getMsg().get(position).getTopic().getTopic_title());
-                        }
 
-                        dynamicMainListThreeViewHolder.musiclist.setText(data.getMsg().get(position).getContent().getTitle().toString());
+                            dynamicMainListFourViewHolder.content.setText(data.getMsg().get(position).getMsg());
 
-                        dynamicMainListThreeViewHolder.zan_count.setText(data.getMsg().get(position).getZan_num()+"");
-                        dynamicMainListThreeViewHolder.pinglun_count.setText(data.getMsg().get(position).getComment_num()+"");
-                        dynamicMainListThreeViewHolder.zhuanfa_count.setText(data.getMsg().get(position).getShare_num()+"");
-                        break;
+                            if (data.getMsg().get(position).getTopic() == null) {
+                                dynamicMainListFourViewHolder.topic_title.setText("");
+                            } else {
+                                dynamicMainListFourViewHolder.topic_title.setText(data.getMsg().get(position).getTopic().getTopic_title());
+                            }
 
+                            dynamicMainListFourViewHolder.musiclist.setText(data.getMsg().get(position).getContent().getTitle().toString());
 
-                    case 4:
+                            dynamicMainListFourViewHolder.zan_count.setText(data.getMsg().get(position).getZan_num() + "");
+                            dynamicMainListFourViewHolder.pinglun_count.setText(data.getMsg().get(position).getComment_num() + "");
+                            dynamicMainListFourViewHolder.zhuanfa_count.setText(data.getMsg().get(position).getShare_num() + "");
+                            break;
 
-                        DynamicMainListFourViewHolder dynamicMainListFourViewHolder = (DynamicMainListFourViewHolder) holder;
-                        dynamicMainListFourViewHolder.username.setText(data.getMsg().get(position).getAuthor().getUsername());
-                        dynamicMainListFourViewHolder.date.setText(data.getMsg().get(position).getCtime()+"");
 
-                        Picasso.with(context).load(data.getMsg().get(position).getAuthor().getUserpic()).into(dynamicMainListFourViewHolder.iv_userpic);
-                        Picasso.with(context).load(data.getMsg().get(position).getContent().getPic()).into(dynamicMainListFourViewHolder.music_photo);
+                        case 5:
 
-                        Picasso.with(context).load(data.getMsg().get(position).getPiclist().get(0).getPic_large()).into(dynamicMainListFourViewHolder.iv_wall_four_one);
-                        Picasso.with(context).load(data.getMsg().get(position).getPiclist().get(1).getPic_large()).into(dynamicMainListFourViewHolder.iv_wall_four_two);
-                        Picasso.with(context).load(data.getMsg().get(position).getPiclist().get(2).getPic_large()).into(dynamicMainListFourViewHolder.iv_wall_four_three);
-                        Picasso.with(context).load(data.getMsg().get(position).getPiclist().get(3).getPic_large()).into(dynamicMainListFourViewHolder.iv_wall_four_four);
+                            DynamicMainListFiveViewHolder dynamicMainListFiveViewHolder = (DynamicMainListFiveViewHolder) holder;
+                            dynamicMainListFiveViewHolder.username.setText(data.getMsg().get(position).getAuthor().getUsername());
+                            dynamicMainListFiveViewHolder.date.setText(data.getMsg().get(position).getCtime() + "");
 
 
-                        dynamicMainListFourViewHolder.content.setText(data.getMsg().get(position).getMsg());
+                            Picasso.with(context).load(data.getMsg().get(position).getAuthor().getUserpic()).into(dynamicMainListFiveViewHolder.iv_userpic);
+                            Picasso.with(context).load(data.getMsg().get(position).getContent().getPic()).into(dynamicMainListFiveViewHolder.music_photo);
 
-                        if (data.getMsg().get(position).getTopic()==null){
-                            dynamicMainListFourViewHolder.topic_title.setText("");
-                        }else {
-                            dynamicMainListFourViewHolder.topic_title.setText(data.getMsg().get(position).getTopic().getTopic_title());
-                        }
 
-                        dynamicMainListFourViewHolder.musiclist.setText(data.getMsg().get(position).getContent().getTitle().toString());
+                            Picasso.with(context).load(data.getMsg().get(position).getPiclist().get(0).getPic_large()).into(dynamicMainListFiveViewHolder.iv_wall_five_one);
+                            Picasso.with(context).load(data.getMsg().get(position).getPiclist().get(1).getPic_large()).into(dynamicMainListFiveViewHolder.iv_wall_five_two);
+                            Picasso.with(context).load(data.getMsg().get(position).getPiclist().get(2).getPic_large()).into(dynamicMainListFiveViewHolder.iv_wall_five_three);
+                            Picasso.with(context).load(data.getMsg().get(position).getPiclist().get(3).getPic_large()).into(dynamicMainListFiveViewHolder.iv_wall_five_four);
+                            Picasso.with(context).load(data.getMsg().get(position).getPiclist().get(4).getPic_large()).into(dynamicMainListFiveViewHolder.iv_wall_five_five);
 
-                        dynamicMainListFourViewHolder.zan_count.setText(data.getMsg().get(position).getZan_num()+"");
-                        dynamicMainListFourViewHolder.pinglun_count.setText(data.getMsg().get(position).getComment_num()+"");
-                        dynamicMainListFourViewHolder.zhuanfa_count.setText(data.getMsg().get(position).getShare_num()+"");
-                        break;
 
+                            dynamicMainListFiveViewHolder.content.setText(data.getMsg().get(position).getMsg());
 
-                    case 5:
+                            if (data.getMsg().get(position).getTopic() == null) {
+                                dynamicMainListFiveViewHolder.topic_title.setText("");
+                            } else {
+                                dynamicMainListFiveViewHolder.topic_title.setText(data.getMsg().get(position).getTopic().getTopic_title());
+                            }
 
-                        DynamicMainListFiveViewHolder dynamicMainListFiveViewHolder = (DynamicMainListFiveViewHolder) holder;
-                        dynamicMainListFiveViewHolder.username.setText(data.getMsg().get(position).getAuthor().getUsername());
-                        dynamicMainListFiveViewHolder.date.setText(data.getMsg().get(position).getCtime()+"");
+                            dynamicMainListFiveViewHolder.musiclist.setText(data.getMsg().get(position).getContent().getTitle().toString());
 
+                            dynamicMainListFiveViewHolder.zan_count.setText(data.getMsg().get(position).getZan_num() + "");
+                            dynamicMainListFiveViewHolder.pinglun_count.setText(data.getMsg().get(position).getComment_num() + "");
+                            dynamicMainListFiveViewHolder.zhuanfa_count.setText(data.getMsg().get(position).getShare_num() + "");
+                            break;
 
-                        Picasso.with(context).load(data.getMsg().get(position).getAuthor().getUserpic()).into(dynamicMainListFiveViewHolder.iv_userpic);
-                        Picasso.with(context).load(data.getMsg().get(position).getContent().getPic()).into(dynamicMainListFiveViewHolder.music_photo);
+                        case 6:
 
+                            DynamicMainListSixViewHolder dynamicMainListSixViewHolder = (DynamicMainListSixViewHolder) holder;
+                            dynamicMainListSixViewHolder.username.setText(data.getMsg().get(position).getAuthor().getUsername());
+                            dynamicMainListSixViewHolder.date.setText(data.getMsg().get(position).getCtime() + "");
 
-                        Picasso.with(context).load(data.getMsg().get(position).getPiclist().get(0).getPic_large()).into(dynamicMainListFiveViewHolder.iv_wall_five_one);
-                        Picasso.with(context).load(data.getMsg().get(position).getPiclist().get(1).getPic_large()).into(dynamicMainListFiveViewHolder.iv_wall_five_two);
-                        Picasso.with(context).load(data.getMsg().get(position).getPiclist().get(2).getPic_large()).into(dynamicMainListFiveViewHolder.iv_wall_five_three);
-                        Picasso.with(context).load(data.getMsg().get(position).getPiclist().get(3).getPic_large()).into(dynamicMainListFiveViewHolder.iv_wall_five_four);
-                        Picasso.with(context).load(data.getMsg().get(position).getPiclist().get(4).getPic_large()).into(dynamicMainListFiveViewHolder.iv_wall_five_five);
+                            Picasso.with(context).load(data.getMsg().get(position).getAuthor().getUserpic()).into(dynamicMainListSixViewHolder.iv_userpic);
+                            Picasso.with(context).load(data.getMsg().get(position).getContent().getPic()).into(dynamicMainListSixViewHolder.music_photo);
 
 
+                            Picasso.with(context).load(data.getMsg().get(position).getPiclist().get(0).getPic_large()).into(dynamicMainListSixViewHolder.iv_wall_six_one);
+                            Picasso.with(context).load(data.getMsg().get(position).getPiclist().get(1).getPic_large()).into(dynamicMainListSixViewHolder.iv_wall_six_two);
+                            Picasso.with(context).load(data.getMsg().get(position).getPiclist().get(2).getPic_large()).into(dynamicMainListSixViewHolder.iv_wall_six_three);
+                            Picasso.with(context).load(data.getMsg().get(position).getPiclist().get(3).getPic_large()).into(dynamicMainListSixViewHolder.iv_wall_six_four);
+                            Picasso.with(context).load(data.getMsg().get(position).getPiclist().get(4).getPic_large()).into(dynamicMainListSixViewHolder.iv_wall_six_five);
+                            Picasso.with(context).load(data.getMsg().get(position).getPiclist().get(5).getPic_large()).into(dynamicMainListSixViewHolder.iv_wall_six_six);
 
 
-                        dynamicMainListFiveViewHolder.content.setText(data.getMsg().get(position).getMsg());
+                            dynamicMainListSixViewHolder.content.setText(data.getMsg().get(position).getMsg());
 
-                        if (data.getMsg().get(position).getTopic()==null){
-                            dynamicMainListFiveViewHolder.topic_title.setText("");
-                        }else {
-                            dynamicMainListFiveViewHolder.topic_title.setText(data.getMsg().get(position).getTopic().getTopic_title());
-                        }
+                            if (data.getMsg().get(position).getTopic() == null) {
+                                dynamicMainListSixViewHolder.topic_title.setText("");
+                            } else {
+                                dynamicMainListSixViewHolder.topic_title.setText(data.getMsg().get(position).getTopic().getTopic_title());
+                            }
 
-                        dynamicMainListFiveViewHolder.musiclist.setText(data.getMsg().get(position).getContent().getTitle().toString());
+                            dynamicMainListSixViewHolder.musiclist.setText(data.getMsg().get(position).getContent().getTitle().toString());
 
-                        dynamicMainListFiveViewHolder.zan_count.setText(data.getMsg().get(position).getZan_num()+"");
-                        dynamicMainListFiveViewHolder.pinglun_count.setText(data.getMsg().get(position).getComment_num()+"");
-                        dynamicMainListFiveViewHolder.zhuanfa_count.setText(data.getMsg().get(position).getShare_num()+"");
-                        break;
+                            dynamicMainListSixViewHolder.zan_count.setText(data.getMsg().get(position).getZan_num() + "");
+                            dynamicMainListSixViewHolder.pinglun_count.setText(data.getMsg().get(position).getComment_num() + "");
+                            dynamicMainListSixViewHolder.zhuanfa_count.setText(data.getMsg().get(position).getShare_num() + "");
+                            break;
 
-                    case 6:
 
-                        DynamicMainListSixViewHolder dynamicMainListSixViewHolder = (DynamicMainListSixViewHolder) holder;
-                        dynamicMainListSixViewHolder.username.setText(data.getMsg().get(position).getAuthor().getUsername());
-                        dynamicMainListSixViewHolder.date.setText(data.getMsg().get(position).getCtime()+"");
-
-                        Picasso.with(context).load(data.getMsg().get(position).getAuthor().getUserpic()).into(dynamicMainListSixViewHolder.iv_userpic);
-                        Picasso.with(context).load(data.getMsg().get(position).getContent().getPic()).into(dynamicMainListSixViewHolder.music_photo);
-
-
-                        Picasso.with(context).load(data.getMsg().get(position).getPiclist().get(0).getPic_large()).into(dynamicMainListSixViewHolder.iv_wall_six_one);
-                        Picasso.with(context).load(data.getMsg().get(position).getPiclist().get(1).getPic_large()).into(dynamicMainListSixViewHolder.iv_wall_six_two);
-                        Picasso.with(context).load(data.getMsg().get(position).getPiclist().get(2).getPic_large()).into(dynamicMainListSixViewHolder.iv_wall_six_three);
-                        Picasso.with(context).load(data.getMsg().get(position).getPiclist().get(3).getPic_large()).into(dynamicMainListSixViewHolder.iv_wall_six_four);
-                        Picasso.with(context).load(data.getMsg().get(position).getPiclist().get(4).getPic_large()).into(dynamicMainListSixViewHolder.iv_wall_six_five);
-                        Picasso.with(context).load(data.getMsg().get(position).getPiclist().get(5).getPic_large()).into(dynamicMainListSixViewHolder.iv_wall_six_six);
-
-
-
-                        dynamicMainListSixViewHolder.content.setText(data.getMsg().get(position).getMsg());
-
-                        if (data.getMsg().get(position).getTopic()==null){
-                            dynamicMainListSixViewHolder.topic_title.setText("");
-                        }else {
-                            dynamicMainListSixViewHolder.topic_title.setText(data.getMsg().get(position).getTopic().getTopic_title());
-                        }
-
-                        dynamicMainListSixViewHolder.musiclist.setText(data.getMsg().get(position).getContent().getTitle().toString());
-
-                        dynamicMainListSixViewHolder.zan_count.setText(data.getMsg().get(position).getZan_num()+"");
-                        dynamicMainListSixViewHolder.pinglun_count.setText(data.getMsg().get(position).getComment_num()+"");
-                        dynamicMainListSixViewHolder.zhuanfa_count.setText(data.getMsg().get(position).getShare_num()+"");
-                        break;
-
-
-
+                    }
 
 
                 }
 
 
+            }else {
+
 
             }
-
-
 
         }
 

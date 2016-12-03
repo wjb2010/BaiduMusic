@@ -2,7 +2,6 @@ package com.example.dllo.baidumusic.Service;
 
 import android.app.Service;
 import android.content.Intent;
-import android.content.ServiceConnection;
 import android.database.Cursor;
 import android.media.MediaPlayer;
 import android.os.Binder;
@@ -12,6 +11,8 @@ import android.support.annotation.Nullable;
 import android.util.Log;
 
 import com.example.dllo.baidumusic.Bean.LocalMusicBean;
+import com.example.dllo.baidumusic.Bean.MyMusicList.MyMusicListBean;
+import com.example.dllo.baidumusic.Database.DBTool;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -22,12 +23,13 @@ import java.util.ArrayList;
 
 public class MusicControlService extends Service {
 
-
+    private DBTool dbtool;
     MyBinder myBinder=new MyBinder();
 
-    private ArrayList<LocalMusicBean> musicData;
+    private ArrayList<LocalMusicBean> old_musicData;
+    private ArrayList<MyMusicListBean> localMusicData=new ArrayList<>();
     private int position = 0;//指定播放的歌曲 默认先播放第一首歌
-    private MediaPlayer mPlayer;
+    private static MediaPlayer mPlayer;
     private Intent mServiceIntent;
 
 
@@ -37,7 +39,7 @@ public class MusicControlService extends Service {
     @Override
     public void onCreate() {
         super.onCreate();
-        musicData=new ArrayList<>();
+        old_musicData=new ArrayList<>();
         mPlayer=new MediaPlayer();
         mServiceIntent=new Intent("MY_MUSIC_CONTROL_BR");
         /**
@@ -67,6 +69,7 @@ public class MusicControlService extends Service {
 
 
     private void initMusicData() {
+        dbtool=new DBTool(this);
         Cursor cursor = getContentResolver().query(MediaStore.Audio.Media.EXTERNAL_CONTENT_URI, null, null, null, null);
         if (cursor != null) {
             cursor.moveToFirst();
@@ -77,22 +80,37 @@ public class MusicControlService extends Service {
                 String singer = cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media.ARTIST));
                 //获取歌曲的url
                 String url = cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media.DATA));
+                Log.d("MusicControlService", url);
                 //获取音乐类型 0 代表不是音乐
                 int isMusic = cursor.getInt(cursor.getColumnIndex(MediaStore.Audio.Media.IS_MUSIC));
                 //获取音乐的时长
                 Long duringTime = cursor.getLong(cursor.getColumnIndex(MediaStore.Audio.Media.DURATION));
 
+
                 if (isMusic != 0 && duringTime / 60 * 1000 > 1) {
                     LocalMusicBean bean = new LocalMusicBean(title, singer, url);
-                    musicData.add(bean);
+                    //MyMusicListBean bean=new MyMusicListBean(title,singer,url,"","");
+
+                    old_musicData.add(bean);
+                   // dbtool.Insert(bean);
                 }
 
 
             } while (cursor.moveToNext());
 
+
         }
+        Log.d("MusicControlService", "已读取音乐资料");
         //关闭游标
         cursor.close();
+
+        /**
+         * 将详细列表写入数据库
+         *
+         */
+
+
+
 
     }
 
@@ -123,11 +141,18 @@ public class MusicControlService extends Service {
        }
 
        /**
+        * 播放网络URL
+        */
+       public void playNetMusic(String url){
+           playNetMusicM(url);
+       }
+
+       /**
         * 播放下一曲
         */
        public void playNext(){
            position++;
-           if (position > musicData.size()-1){
+           if (position > old_musicData.size()-1){
                position = 0;
            }
            //重置播放器
@@ -152,7 +177,7 @@ public class MusicControlService extends Service {
        public void playLast(){
            position--;
            if (position < 0){
-               position = musicData.size() - 1;
+               position = old_musicData.size() - 1;
            }
            mPlayer.reset();
            play();
@@ -210,14 +235,54 @@ public class MusicControlService extends Service {
 
     }
 
+    private void playNetMusicM(String url) {
+
+        try {
+            if (!mPlayer.isPlaying()){
+//                //mPlayer=new MediaPlayer();
+//                Log.d("MusicControlService", "播放网络歌曲1");
+//                mPlayer.release();
+//
+//                mPlayer.setDataSource("http://sc1.111ttt.com/2016/1/11/16/204161633478.mp3");
+//                mPlayer.prepareAsync();
+//                mPlayer.start();
+
+                mPlayer.setDataSource(url);
+                mPlayer.prepare();
+                mPlayer.start();
+
+
+            } else {
+                Log.d("MusicControlService", "播放网络歌曲2");
+                mPlayer.stop();
+                mPlayer.reset();
+                mPlayer.setDataSource(url);
+                mPlayer.prepare();
+                mPlayer.start();
+
+            }
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }catch (IllegalStateException e){
+            mPlayer=null;
+           mPlayer=new MediaPlayer();
+
+        }
+
+    }
+
+
+
+
     private void play() {
 
         try {
             if (!mPlayer.isPlaying()){
-                mPlayer.setDataSource(musicData.get(position).getUrl());
+                mPlayer.setDataSource(old_musicData.get(position).getUrl());
                 mPlayer.prepare();
                 mPlayer.start();
-                mServiceIntent.putExtra("key",musicData.get(position));
+                mServiceIntent.putExtra("key",old_musicData.get(position));
                 sendBroadcast(mServiceIntent);
             }
             else {

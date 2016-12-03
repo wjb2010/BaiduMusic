@@ -18,7 +18,6 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
-
 import com.example.dllo.baidumusic.R;
 
 public class MySideViewFromRight extends ViewGroup {
@@ -30,7 +29,8 @@ public class MySideViewFromRight extends ViewGroup {
     private String isText;
     private int msrc;
     boolean flag;
-
+    private float downX;
+    private float downY;
 
 
     public MySideViewFromRight(Context context, AttributeSet attrs) {
@@ -107,11 +107,34 @@ public class MySideViewFromRight extends ViewGroup {
 
     }
 
+
+    @Override
+    public boolean onInterceptTouchEvent(MotionEvent ev) {
+        switch (ev.getAction()) {
+            case MotionEvent.ACTION_DOWN:
+                downX = ev.getX();
+                downY = ev.getY();
+                break;
+
+            case MotionEvent.ACTION_MOVE:
+                if(Math.abs(downX - ev.getX()) > Math.abs(downY - ev.getY())){
+                    Log.d("MySideViewFromRight", "拦截");
+                    return true;
+                }
+                break;
+        }
+
+        return super.onInterceptTouchEvent(ev);
+    }
+
+
+
     @SuppressLint("NewApi")
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         final float X = event.getX();
         float Y = event.getY();
+        this.setFocusable(true);
         switch (event.getAction()) {
 
             case MotionEvent.ACTION_MOVE:

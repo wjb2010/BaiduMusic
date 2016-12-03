@@ -1,6 +1,11 @@
 package com.example.dllo.baidumusic.Fragment;
 
+import android.os.Bundle;
+import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 
 import com.example.dllo.baidumusic.R;
 
@@ -8,19 +13,12 @@ import com.example.dllo.baidumusic.R;
  * Created by dllo on 16/11/23.
  */
 
-public class FragmentTest extends BaseFragment {
+public class FragmentTest extends Fragment {
+
+    @Nullable
     @Override
-    public int setLayout() {
-        return R.layout.fragment_test;
-    }
-
-    @Override
-   public void initView(View view) {
-
-    }
-
-    @Override
-    public void initData() {
-
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        View view=inflater.inflate(R.layout.fragment_test,container,false);
+        return view;
     }
 }

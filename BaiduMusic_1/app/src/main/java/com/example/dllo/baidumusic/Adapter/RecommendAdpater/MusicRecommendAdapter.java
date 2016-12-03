@@ -9,6 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.dllo.baidumusic.Bean.RecommendBean;
+import com.example.dllo.baidumusic.Interface.MyClick;
 import com.example.dllo.baidumusic.R;
 import com.squareup.picasso.Picasso;
 
@@ -20,6 +21,11 @@ public class MusicRecommendAdapter extends RecyclerView.Adapter<MusicRecommendAd
 
     private RecommendBean.ResultBeanXXXXXXXXXXXXX.DiyBean data;
     private Context context;
+    private MyClick myClick;
+
+    public void setMyClick(MyClick myClick) {
+        this.myClick = myClick;
+    }
 
     public void setData(RecommendBean.ResultBeanXXXXXXXXXXXXX.DiyBean data) {
         this.data = data;
@@ -39,8 +45,16 @@ public class MusicRecommendAdapter extends RecyclerView.Adapter<MusicRecommendAd
     }
 
     @Override
-    public void onBindViewHolder(DoubleItemViewHolder holder, int position) {
+    public void onBindViewHolder(DoubleItemViewHolder holder, final int position) {
 
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                myClick.MyClickUrl(data.getResult().get(position).getListid(),position);
+
+
+            }
+        });
         holder.tv.setText(data.getResult().get(position).getTitle());
         Picasso.with(context).load(data.getResult().get(position).getPic()).into(holder.iv);
 

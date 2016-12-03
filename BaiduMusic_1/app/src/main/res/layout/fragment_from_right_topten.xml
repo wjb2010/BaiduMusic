@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#10FFFFFF"
+    tools:context="com.example.dllo.baidumusic.Activity.MainActivity">
+
+    <com.example.dllo.baidumusic.CustomizeView.MySideViewFromRight
+        android:id="@+id/rightview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:getText="fra_topten">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@android:color/white">
+
+
+            <android.support.design.widget.CoordinatorLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:fitsSystemWindows="true">
+
+
+                <!--排行详情 歌曲列表-->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:gravity="center|left"
+                            android:drawableLeft="@mipmap/bt_notificationbar_play"
+                            android:id="@+id/fragment_menu_list_detail_song_count"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginLeft="5dp"
+                            android:layout_weight="1"
+                            android:text="播放全部/100首歌"
+                            android:textSize="20sp" />
+
+                        <ImageView
+                            android:id="@+id/fragment_menu_list_detail_download"
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
+
+                            android:src="@mipmap/bt_playpage_button_download_normal_new" />
+
+
+
+
+                    </LinearLayout>
+
+                    <android.support.v7.widget.RecyclerView
+                        android:id="@+id/rv_item_topten"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+
+                </LinearLayout>
+
+                <android.support.design.widget.AppBarLayout
+                    android:id="@+id/fragment_menu_list_detail_app_bar"
+                    android:layout_width="match_parent"
+                    android:layout_height="225dp"
+                    android:fitsSystemWindows="true"
+                    android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+
+                    <android.support.design.widget.CollapsingToolbarLayout
+                        android:id="@+id/fragment_menu_list_detail_toolbar_layout"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:fitsSystemWindows="true"
+                        app:contentScrim="#0005b1ef"
+
+                        app:layout_scrollFlags="scroll|exitUntilCollapsed">
+                        <!--大图-->
+                        <ImageView
+                            android:id="@+id/iv_item_topten"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:clickable="true"
+                            android:scaleType="fitXY"
+                            android:src="@mipmap/ic_launcher" />
+                        <!--日期-->
+                        <TextView
+                            android:id="@+id/fragment_menu_list_detail_date"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="bottom"
+                            android:layout_marginBottom="5dp"
+                            android:layout_marginLeft="5dp"
+                            android:clickable="true"
+                            android:text="更新日期:2016.11.30" />
+
+
+
+                        <android.support.v7.widget.Toolbar
+                            android:id="@+id/fragment_menu_list_detail_toolbar"
+                            android:layout_width="match_parent"
+                            android:layout_height="50dp"
+                            >
+
+                            <RelativeLayout
+                                android:layout_marginTop="35dp"
+                                android:layout_width="match_parent"
+                                android:layout_height="35dp"
+
+
+                                >
+
+
+                            <ImageView
+                                android:id="@+id/fragment_menu_list_detail_back_iv"
+                                android:layout_width="15dp"
+                                android:layout_alignParentLeft="true"
+
+                                android:layout_height="15dp"
+
+
+                                android:src="@mipmap/sapi_btn_back" />
+                            <ImageView
+                                android:id="@+id/fragment_menu_list_detail_share"
+                                android:scaleType="fitXY"
+                                android:scaleY="1.5"
+                                android:scaleX="1.5"
+                                android:layout_width="20dp"
+                                android:layout_alignParentRight="true"
+                                android:layout_height="20dp"
+
+
+                                android:src="@mipmap/bt_playpage_button_share_normal_new" />
+                            </RelativeLayout>
+                        </android.support.v7.widget.Toolbar>
+                    </android.support.design.widget.CollapsingToolbarLayout>
+
+                </android.support.design.widget.AppBarLayout>
+
+
+            </android.support.design.widget.CoordinatorLayout>
+
+
+        </RelativeLayout>
+
+    </com.example.dllo.baidumusic.CustomizeView.MySideViewFromRight>
+</RelativeLayout>
